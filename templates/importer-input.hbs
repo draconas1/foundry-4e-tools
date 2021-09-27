@@ -1,0 +1,13 @@
+<form>
+    <textarea id="input" type="text" name="input" data-dtype="String" onclick="this.select();" rows="10" cols="80">
+
+    </textarea>
+
+    <button type="submit"><i class="fas fa-plus"></i>{{localize "TOOLS4E.buttons.import-data"}}</button>
+</form>
+
+<script>
+    var input = document.getElementById('input');
+    input.focus();
+    input.select();
+</script>

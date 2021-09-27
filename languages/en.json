@@ -1,0 +1,25 @@
+{
+  "TOOLS4E" : {
+    "creature-import-title" : "Import JSON",
+    "buttons" : {
+      "import-data" : "Import",
+      "importer-launch-button" : "Import NPCs"
+    },
+    "button-title": "Open To-Do list",
+    "add-todo": "Add To-Do",
+    "delete-todo": "Delete To-Do",
+    "mark-done": "Mark Done",
+    "settings": {
+      "inject-button": {
+        "Name": "Display To-Do List button?",
+        "Hint": "Controls whether or not the To-Do List can be opened from the player list."
+      }
+    },
+    "confirms": {
+      "deleteConfirm": {
+        "Title": "Confirm Deletion",
+        "Content": "Are you sure you want to delete this To-Do? This action cannot be undone."
+      }
+    }
+  }
+}

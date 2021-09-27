@@ -1,0 +1,34 @@
+{
+	"name": "foundry-4e-tools",
+	"title": "Dracs 4E tools for Foundry VTT",
+	"description": "Imports Creatures from Masterplan into Foundry",
+	"author": "Drac",
+	"version": "0.0.1",
+	"minimumCoreVersion": "0.8.0",
+	"compatibleCoreVersion": "0.8.9",
+	"url": "http://forge-vtt.com/",
+	"manifest": "ManifestURLhere",
+	"download": "DownloadURLhere",
+	"scripts": [
+		"scripts/masterplan-import.js"
+	],
+	"languages": [
+		{
+			"lang": "en",
+			"name": "English",
+			"path": "languages/en.json"
+		}
+	],
+	"styles": [
+		"styles/4etools.css"
+	],
+	"packs": [
+		{
+			"name": "init_monsters",
+			"label": "Monsters",
+			"system": "dnd4eBeta",
+			"path": "./packs/init_monsters.db",
+			"entity": "Actor"
+		}
+	]
+}
