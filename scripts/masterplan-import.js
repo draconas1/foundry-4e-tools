@@ -1,14 +1,14 @@
 Hooks.once('devModeReady', ({ registerPackageDebugFlag }) => {
-    registerPackageDebugFlag(MasterplanImport.ID);
+    registerPackageDebugFlag(DnD4eTools.ID);
 });
 
 Hooks.once('init', () => {
-    MasterplanImport.initialize();
+    DnD4eTools.initialize();
 });
 
 Hooks.on('renderPlayerList', (playerList, html) => {
 
-    if (!game.settings.get(MasterplanImport.ID, MasterplanImport.SETTINGS.INJECT_BUTTON)) {
+    if (!game.settings.get(DnD4eTools.ID, DnD4eTools.SETTINGS.INJECT_BUTTON)) {
         return;
     }
 
@@ -25,7 +25,7 @@ Hooks.on('renderPlayerList', (playerList, html) => {
 
     html.on('click', '.todo-list-icon-button', (event) => {
         const userId = $(event.currentTarget).parents('[data-user-id]')?.data()?.userId;
-        MasterplanImport.toDoListConfig.render(true, {userId});
+        DnD4eTools.toDoListConfig.render(true, {userId});
     });
 });
 
@@ -39,7 +39,7 @@ Hooks.on('changeSidebarTab', (activeSheet) => {
 });
 
 Hooks.on('renderSidebarTab', (activeTab, html, user) => {
-    MasterplanImport.log(false, "badger")
+    DnD4eTools.log(false, "badger")
     // find the element which has our logged in user's id
     const topBar = html.find(`[class="header-actions action-buttons flexrow"]`)
     // create localized tooltip
@@ -48,7 +48,7 @@ Hooks.on('renderSidebarTab', (activeTab, html, user) => {
         `<button type='button' id="mp-import-button" title='${tooltip}'><i>${tooltip}</i></button>`
     )
     html.on('click', '#mp-import-button', (event) => {
-        MasterplanImport.creatureImporterScreen.render(true);
+        DnD4eTools.creatureImporterScreen.render(true);
     });
 });
 
@@ -60,7 +60,7 @@ Hooks.on('renderSidebarTab', (activeTab, html, user) => {
  * @property {boolean} isDone - Marks whether the todo is done.
  * @property {string} userId - The user who owns this todo.
  */
-class MasterplanImport {
+class DnD4eTools {
     static ID = 'foundry-4e-tools';
 
     static FLAGS = {
@@ -108,7 +108,7 @@ class CreatureImporterScreen extends FormApplication {
         const overrides = {
             height: 'auto',
             id: 'creature-import',
-            template: MasterplanImport.TEMPLATES.IMPORTER_INPUT,
+            template: DnD4eTools.TEMPLATES.IMPORTER_INPUT,
             title: title,
             userId: game.userId
         };
@@ -118,40 +118,43 @@ class CreatureImporterScreen extends FormApplication {
     }
 
     async _updateObject(event, formData) {
-        MasterplanImport.log(false, "update called")
         let obj = "";
 
         try{
             obj = JSON.parse(('Pasted content: ', formData.input))
         } catch(err) {
-            MasterplanImport.error(false, "Invalid JSON Input")
-            ui.notifications.info("Invalid Input, JSON formating did not validate");
+            DnD4eTools.log(false, "Invalid JSON Input")
+            ui.notifications.error("Invalid Input, JSON formatting did not validate");
             return;
         }
 
         for (const encounter of obj) {
             for (const creature of encounter.Creatures) {
-                Actor.create(
+                DnD4eTools.log(false, "Importing " + creature.Name)
+                let actor = await Actor.create(
                     {
-                        "name" : creature.name,
+                        "name" : creature.Name,
                         "type" : "NPC",
-                        "data" : creature
+                        "data" : creature.Data
                     }
                 )
+                for (const power of creature.Powers) {
+                    //assign obj ID if one was not made
+                    if(!power._id) { power._id = randomID(16); }
+                    await actor.createOwnedItem(power)
+                }
+                for (const trait of creature.Traits) {
+                    //assign obj ID if one was not made
+                    if(!trait._id) { trait._id = randomID(16); }
+                    await actor.createOwnedItem(trait)
+                }
+
+                // work around because advancedCals does not want to be set on import.
+                actor.update({
+                    "data.advancedCals" : true
+                })
             }
         }
-        //
-        // //check if JSON type is valid
-        // const validTypes = ["weapon", "equipment", "consumable", "tool", "loot", "classFeats", "feat", "backpack", "raceFeats", "pathFeats", "destinyFeats", "ritual", "power"]
-        // if(!validTypes.includes(obj.type)) {
-        //     console.error(`Invalid Object Type of "${obj.type}"`)
-        //     ui.notifications.info(`Invalid Object Type of "${obj.type}"`);
-        //     return;
-        // }
-        // //assign obj ID if one was not made
-        // if(!obj._id) { obj._id = randomID(16); }
-        // //generate new item
-        // this.object.createOwnedItem(obj)
     }
 }
 
@@ -173,7 +176,7 @@ class ToDoListData {
 
     // get all todos for a given user
     static getToDosForUser(userId) {
-        return game.users.get(userId)?.getFlag(MasterplanImport.ID, MasterplanImport.FLAGS.TODOS);
+        return game.users.get(userId)?.getFlag(DnD4eTools.ID, DnD4eTools.FLAGS.TODOS);
     }
 
     // create a new todo for a given user
@@ -192,7 +195,7 @@ class ToDoListData {
         }
 
         // update the database with the new ToDos
-        return game.users.get(userId)?.setFlag(MasterplanImport.ID, MasterplanImport.FLAGS.TODOS, newToDos);
+        return game.users.get(userId)?.setFlag(DnD4eTools.ID, DnD4eTools.FLAGS.TODOS, newToDos);
     }
 
     // update a specific todo by id with the provided updateData
@@ -205,7 +208,7 @@ class ToDoListData {
         }
 
         // update the database with the updated ToDo list
-        return game.users.get(relevantToDo.userId)?.setFlag(MasterplanImport.ID, MasterplanImport.FLAGS.TODOS, update);
+        return game.users.get(relevantToDo.userId)?.setFlag(DnD4eTools.ID, DnD4eTools.FLAGS.TODOS, update);
     }
 
     // delete a specific todo by id
@@ -218,11 +221,11 @@ class ToDoListData {
         }
 
         // update the database with the updated ToDo list
-        return game.users.get(relevantToDo.userId)?.setFlag(MasterplanImport.ID, MasterplanImport.FLAGS.TODOS, keyDeletion);
+        return game.users.get(relevantToDo.userId)?.setFlag(DnD4eTools.ID, DnD4eTools.FLAGS.TODOS, keyDeletion);
     }
 
     static updateUserToDos(userId, updateData) {
-        return game.users.get(userId)?.setFlag(MasterplanImport.ID, MasterplanImport.FLAGS.TODOS, updateData);
+        return game.users.get(userId)?.setFlag(DnD4eTools.ID, DnD4eTools.FLAGS.TODOS, updateData);
     }
 }
 
@@ -235,7 +238,7 @@ class ToDoListConfig extends FormApplication {
         const overrides = {
             height: 'auto',
             id: 'todo-list',
-            template: MasterplanImport.TEMPLATES.TODOLIST,
+            template: DnD4eTools.TEMPLATES.TODOLIST,
             title: 'To Do List',
             userId: game.userId,
             closeOnSubmit: false, // do not close when submitted
@@ -254,7 +257,7 @@ class ToDoListConfig extends FormApplication {
     }
 
     async _updateObject(event, formData) {
-        MasterplanImport.log(false, 'saving');
+        DnD4eTools.log(false, 'saving');
 
         const expandedData = foundry.utils.expandObject(formData);
 
@@ -274,7 +277,7 @@ class ToDoListConfig extends FormApplication {
         const action = clickedElement.data().action;
         const toDoId = clickedElement.parents('[data-todo-id]')?.data()?.todoId;
 
-        MasterplanImport.log(false, 'Button Clicked!', {action, toDoId});
+        DnD4eTools.log(false, 'Button Clicked!', {action, toDoId});
 
         switch (action) {
             case 'create': {
@@ -298,7 +301,7 @@ class ToDoListConfig extends FormApplication {
             }
 
             default:
-                MasterplanImport.log(false, 'Invalid action detected', action);
+                DnD4eTools.log(false, 'Invalid action detected', action);
         }
     }
 
