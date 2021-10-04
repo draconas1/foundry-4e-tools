@@ -6,9 +6,9 @@
 	"version": "0.0.1",
 	"minimumCoreVersion": "0.8.0",
 	"compatibleCoreVersion": "0.8.9",
-	"url": "http://forge-vtt.com/",
-	"manifest": "ManifestURLhere",
-	"download": "DownloadURLhere",
+	"url": "https://github.com/draconas1/foundry-4e-tools",
+	"manifest": "https://github.com/draconas1/foundry-4e-tools/blob/main/module.json",
+	"download": "https://github.com/draconas1/foundry-4e-tools/releases/download/0.0.1/foundry-4e-tools.zip",
 	"scripts": [
 		"scripts/masterplan-import.js"
 	],
@@ -22,11 +22,17 @@
 	"styles": [
 		"styles/4etools.css"
 	],
+	"dependencies": [
+		{
+			"name": "dnd4e",
+			"type": "system"
+		}
+	],
 	"packs": [
 		{
 			"name": "init_monsters",
 			"label": "Monsters",
-			"system": "dnd4eBeta",
+			"system": "dnd4e",
 			"path": "./packs/init_monsters.db",
 			"entity": "Actor"
 		}
