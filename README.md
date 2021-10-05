@@ -10,7 +10,7 @@ An importer for Monster Data from Masterplan.  You will need https://github.com/
 
 ## Installation
 * Open the Foundry application and click **"Install System"** in the **"Addon Modules"** tab.
-* Paste the following link: https://github.com/draconas1/foundry-4e-tools/blob/main/module.json
+* Paste the following link: https://raw.githubusercontent.com/draconas1/foundry-4e-tools/main/module.json
 * Click "Install"
 * Enable it on your game.
 
