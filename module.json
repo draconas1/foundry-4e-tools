@@ -9,8 +9,8 @@
 	"url": "https://github.com/draconas1/foundry-4e-tools",
 	"manifest": "https://raw.githubusercontent.com/draconas1/foundry-4e-tools/main/module.json",
 	"download": "https://github.com/draconas1/foundry-4e-tools/releases/download/0.0.2/foundry-4e-tools.zip",
-	"scripts": [
-		"scripts/masterplan-import.js"
+	"esmodules": [
+		"module/4e-tools.js"
 	],
 	"languages": [
 		{

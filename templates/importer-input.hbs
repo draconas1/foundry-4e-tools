@@ -1,10 +1,10 @@
 <form>
-    <textarea id="input" type="text" name="input" data-dtype="String" onclick="this.select();" rows="10" cols="80"></textarea>
-    <button type="submit"><i class="fas fa-plus"></i>{{localize "TOOLS4E.buttons.import-data"}}</button>
+    <label for="masterPlanInput">{{localize "TOOLS4E.import-json-screen.label"}}</label>
+    <textarea type="text" id="masterPlanInput" name="masterPlanInput" data-dtype="String" onclick="this.select();" rows="10" cols="80" placeholder="{{localize "TOOLS4E.import-json-screen.placeholder"}}"></textarea>
+    <button type="submit"><i class="fas fa-plus"></i>{{localize  "TOOLS4E.import-json-screen.import-button"}}</button>
 </form>
 
 <script>
-    const input = document.getElementById('input');
-    input.focus();
-    input.select();
+    document.getElementById('masterPlanInput').focus();
+    document.getElementById('masterPlanInput').select();
 </script>

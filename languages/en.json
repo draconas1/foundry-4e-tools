@@ -1,9 +1,15 @@
 {
   "TOOLS4E" : {
-    "creature-import-title" : "Import JSON",
+
     "buttons" : {
-      "import-data" : "Import",
-      "importer-launch-button" : "Import NPCs"
+
+      "importer-launch-button" : "Import Monsters from Masterplan"
+    },
+    "import-json-screen" : {
+      "title" : "Import JSON from Masterplan",
+      "label" : "Paste the Foundry JSON you exported from Masterplan below and click import",
+      "placeholder" : "Foundry format JSON",
+      "import-button" : "Import creatures into Foundry"
     },
     "button-title": "Open To-Do list",
     "add-todo": "Add To-Do",
