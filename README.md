@@ -31,5 +31,5 @@ There are probably a lot of bugs, here are some I know about:
 1. It still has legacy code and UI for the "todo list" tutorial all over it.
 2. Empty folders can be created for empty encounters.  
 
-## Credit
+## Thanks
 Dan Houston and Dave Barnett both kindly created the SVG art of the 4E power icons for me when I posted a request out to my friends :)
