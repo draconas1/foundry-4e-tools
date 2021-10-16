@@ -27,7 +27,10 @@ export default class DnD4eTools {
     }
 
     static SETTINGS = {
-        INJECT_BUTTON: 'inject-button'
+        INJECT_BUTTON: 'inject-button',
+        CREATE_IN_ENCOUNTER_FOLDERS: 'create-in-encounter-folders',
+        DO_NOT_DUPLICATE: 'do-not-import-duplicates',
+        DO_NOT_DUPLICATE_IN_FOLDER: 'do-not-import-duplicates-in-folder',
     }
 
     static TEMPLATES = {
@@ -49,14 +52,41 @@ export default class DnD4eTools {
     static initialize() {
         //this.toDoListConfig = new ToDoListConfig();
         console.log(this.NAME + " | Initialising 4E Tools and Masterplan Importer")
-        game.settings.register(this.ID, this.SETTINGS.INJECT_BUTTON, {
-            name: `TOOLS4E.settings.${this.SETTINGS.INJECT_BUTTON}.Name`,
+        // game.settings.register(this.ID, this.SETTINGS.INJECT_BUTTON, {
+        //     name: `TOOLS4E.settings.${this.SETTINGS.INJECT_BUTTON}.Name`,
+        //     default: true,
+        //     type: Boolean,
+        //     scope: 'client',
+        //     config: true,
+        //     hint: `TOOLS4E.settings.${this.SETTINGS.INJECT_BUTTON}.Hint`,
+        //     onChange: () => ui.players.render()
+        // });
+
+        game.settings.register(this.ID, this.SETTINGS.CREATE_IN_ENCOUNTER_FOLDERS, {
+            name: `TOOLS4E.settings.${this.SETTINGS.CREATE_IN_ENCOUNTER_FOLDERS}.Name`,
             default: true,
             type: Boolean,
             scope: 'client',
             config: true,
-            hint: `TOOLS4E.settings.${this.SETTINGS.INJECT_BUTTON}.Hint`,
-            onChange: () => ui.players.render()
+            hint: `TOOLS4E.settings.${this.SETTINGS.CREATE_IN_ENCOUNTER_FOLDERS}.Hint`
+        });
+
+        game.settings.register(this.ID, this.SETTINGS.DO_NOT_DUPLICATE, {
+            name: `TOOLS4E.settings.${this.SETTINGS.DO_NOT_DUPLICATE}.Name`,
+            default: true,
+            type: Boolean,
+            scope: 'client',
+            config: true,
+            hint: `TOOLS4E.settings.${this.SETTINGS.DO_NOT_DUPLICATE}.Hint`
+        });
+
+        game.settings.register(this.ID, this.SETTINGS.DO_NOT_DUPLICATE_IN_FOLDER, {
+            name: `TOOLS4E.settings.${this.SETTINGS.DO_NOT_DUPLICATE_IN_FOLDER}.Name`,
+            default: true,
+            type: Boolean,
+            scope: 'client',
+            config: true,
+            hint: `TOOLS4E.settings.${this.SETTINGS.DO_NOT_DUPLICATE_IN_FOLDER}.Hint`
         });
     }
 }

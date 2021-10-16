@@ -9,7 +9,11 @@
       "title" : "Import JSON from Masterplan",
       "label" : "Paste the Foundry JSON you exported from Masterplan below and click import",
       "placeholder" : "Foundry format JSON",
-      "import-button" : "Import creatures into Foundry"
+      "import-button" : "Import creatures into Foundry",
+      "create-in-encounter-folders" : "Import creatures into folders based on encounter",
+      "no-duplicate-checking" : "Do not check if creatures already exist",
+      "do-not-import-duplicates" : "Do not import creatures that already exist (globally)",
+      "do-not-import-duplicates-in-folder" : "Do not import creatures that already exist in the same folder"
     },
     "button-title": "Open To-Do list",
     "add-todo": "Add To-Do",
@@ -19,6 +23,18 @@
       "inject-button": {
         "Name": "Display To-Do List button?",
         "Hint": "Controls whether or not the To-Do List can be opened from the player list."
+      },
+      "create-in-encounter-folders": {
+        "Name": "Default: Import into Folders?",
+        "Hint": "Default setting for when importing, should monsters be grouped together into a folder named for their encounter?"
+      },
+      "do-not-import-duplicates": {
+        "Name": "Default: Don't import monsters that exist?",
+        "Hint": "Default setting for if a monster already exists (in any folder), no not reimport it."
+      },
+      "do-not-import-duplicates-in-folder": {
+        "Name": "Default: Only check duplicates in same folder?",
+        "Hint": "Default setting for only checking within the encounter folder to see if a monster already exists."
       }
     },
     "confirms": {

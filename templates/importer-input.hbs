@@ -1,10 +1,56 @@
 <form>
     <label for="masterPlanInput">{{localize "TOOLS4E.import-json-screen.label"}}</label>
-    <textarea type="text" id="masterPlanInput" name="masterPlanInput" data-dtype="String" onclick="this.select();" rows="10" cols="80" placeholder="{{localize "TOOLS4E.import-json-screen.placeholder"}}"></textarea>
-    <button type="submit"><i class="fas fa-plus"></i>{{localize  "TOOLS4E.import-json-screen.import-button"}}</button>
+    <textarea type="text" id="masterPlanInput" name="masterPlanInput" data-dtype="String" onclick="this.select();" rows="10" cols="80"
+              placeholder="{{localize "TOOLS4E.import-json-screen.placeholder"}}"></textarea>
+    <div>
+        <input type="checkbox" id="create-in-encounter-folders" name="create-in-encounter-folders" onchange="handleImportInFoldersChange(this);">
+        <label for="create-in-encounter-folders">{{localize "TOOLS4E.import-json-screen.create-in-encounter-folders"}}</label>
+    </div>
+    <div>
+        <input type="radio" id="no-duplicate-checking" name="handle-duplicates" checked value="no-duplicate-checking">
+        <label for="do-not-import-duplicates">{{localize "TOOLS4E.import-json-screen.no-duplicate-checking"}}</label>
+    </div>
+    <div>
+        <input type="radio" id="do-not-import-duplicates" name="handle-duplicates" value="do-not-import-duplicates">
+        <label for="do-not-import-duplicates">{{localize "TOOLS4E.import-json-screen.do-not-import-duplicates"}}</label>
+    </div>
+    <div>
+        <input type="radio" id="do-not-import-duplicates-in-folder" name="handle-duplicates" value="do-not-import-duplicates-in-folder">
+        <label for="do-not-import-duplicates-in-folder">{{localize "TOOLS4E.import-json-screen.do-not-import-duplicates-in-folder"}}</label>
+    </div>
+    <input type="hidden" id="create-in-encounter-folders-default" value="{{create-in-encounter-folders}}"/>
+    <input type="hidden" id="do-not-import-duplicates-default" value="{{do-not-import-duplicates}}"/>
+    <input type="hidden" id="do-not-import-duplicates-in-folder-default" value="{{do-not-import-duplicates-in-folder}}"/>
+    <button type="submit"><i class="fas fa-plus"></i>{{localize "TOOLS4E.import-json-screen.import-button"}}</button>
 </form>
 
 <script>
     document.getElementById('masterPlanInput').focus();
     document.getElementById('masterPlanInput').select();
+    if (truthy(document.getElementById('create-in-encounter-folders-default').value)) {
+        document.getElementById('create-in-encounter-folders').setAttribute("checked", "true")
+    }
+    else {
+        document.getElementById('do-not-import-duplicates-in-folder').setAttribute("disabled", "true")
+    }
+
+    if (truthy(document.getElementById('do-not-import-duplicates-default').value)) {
+        document.getElementById('do-not-import-duplicates').setAttribute("checked", "true")
+    }
+    if (truthy((document.getElementById('do-not-import-duplicates-in-folder-default').value)) && (truthy(document.getElementById('create-in-encounter-folders-default').value))) {
+        document.getElementById('do-not-import-duplicates-in-folder').setAttribute("checked", "true")
+    }
+
+    function handleImportInFoldersChange(cb) {
+        if (cb.checked) {
+            document.getElementById('do-not-import-duplicates-in-folder').removeAttribute("disabled")
+        }
+        else {
+            document.getElementById('do-not-import-duplicates-in-folder').setAttribute("disabled", "true")
+        }
+    }
+
+    function truthy(val) {
+        return val && val == "true"
+    }
 </script>
