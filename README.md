@@ -41,7 +41,12 @@ There are probably a lot of bugs, here are some I know about:
 TBD: Auto-bloodied token
 
 ## Data
-TBD: Some compendiums of [4th Edition System Reference Document](http://weirdzine.com/wp-content/uploads/2015/07/4E_SRD-1.pdf) compliant data
+Some compendiums of [4th Edition System Reference Document](http://weirdzine.com/wp-content/uploads/2015/07/4E_SRD-1.pdf) compliant data.
+* Weapons
+* TBD: Armour
+
+### Addons & Compatibility
+* Compendiums are arranged using [Compendium Folders](https://foundryvtt.com/packages/compendium-folders)
 
 # Thanks
 Dan Houston and Dave Barnett both kindly created the SVG art of the 4E power icons for me when I posted a request out to my friends :)

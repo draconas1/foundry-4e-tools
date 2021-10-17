@@ -30,11 +30,11 @@
 	],
 	"packs": [
 		{
-			"name": "init_monsters",
-			"label": "Monsters",
+			"name": "srd-weapons",
+			"label": "SRD Weapons",
 			"system": "dnd4e",
-			"path": "./packs/init_monsters.db",
-			"entity": "Actor"
+			"path": "./packs/srd-weapons.db",
+			"entity": "Item"
 		}
 	]
 }
