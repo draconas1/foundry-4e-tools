@@ -76,7 +76,8 @@ export default class CreatureImporterScreen extends FormApplication {
                             "name" : creature.Name,
                             "type" : "NPC",
                             "data" : creature.Data,
-                            "folder" : folderId
+                            "folder" : folderId,
+                            "token" : creature.Token
                         }
                     )
                     for (const power of creature.Powers) {
@@ -91,9 +92,11 @@ export default class CreatureImporterScreen extends FormApplication {
                     }
 
                     // work around because advancedCals does not want to be set on import.
+                    // also to get the token size to update properly
                     actor.update({
-                        "data.advancedCals" : true
-                    })
+                        "data.advancedCals" : true,
+                        "data.details.size" : creature.Data.details.size
+                    }, { forceSizeUpdate: true})
                 }
             }
         } catch(err) {
