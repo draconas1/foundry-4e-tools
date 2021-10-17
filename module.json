@@ -35,6 +35,13 @@
 			"system": "dnd4e",
 			"path": "./packs/srd-weapons.db",
 			"entity": "Item"
+		},
+		{
+			"name": "srd-armour",
+			"label": "SRD Armour",
+			"system": "dnd4e",
+			"path": "./packs/srd-armour.db",
+			"entity": "Item"
 		}
 	]
 }
