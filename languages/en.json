@@ -35,6 +35,22 @@
       "do-not-import-duplicates-in-folder": {
         "Name": "Default: Only check duplicates in same folder?",
         "Hint": "Default setting for only checking within the encounter folder to see if a monster already exists."
+      },
+      "bloodied-icon": {
+        "Name": "Auto Bloodied",
+        "Hint": "Apply the Bloodied status icon (large) automatically when a creature is bloodied."
+      },
+      "dead-icon": {
+        "Name": "Auto Defeated",
+        "Hint": "When a creature hits 0 HP it is given the dead status and marked as defeated in combat if an NPC, or dying if a PC. PC's are marked dead on -bloodied HP"
+      },
+      "bloodied-tint": {
+        "Name": "Auto Bloodied: Red Tint",
+        "Hint": "Tint the token red automatically when a creature is bloodied."
+      },
+      "change-dead-icon": {
+        "Name": "Change Dead Status Icon",
+        "Hint": "Changes the Dead Status icon to be a red skull and crossbones which I found more obvious than the default"
       }
     },
     "confirms": {
