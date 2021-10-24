@@ -1,4 +1,7 @@
-import {renderSidebarTab} from "./hooks.js";
+import {setBloodiedDeadOnHPChange} from "./hooks/auto-bloodied-dead.js";
+import {addImportMonsterButton} from "./hooks/import-button.js";
+import {setDeadIcon} from "./hooks/set-dead-icon.js";
+import {registerConfigs} from "./config.js";
 
 Hooks.once('devModeReady', ({ registerPackageDebugFlag }) => {
     registerPackageDebugFlag(DnD4eTools.ID);
@@ -6,24 +9,20 @@ Hooks.once('devModeReady', ({ registerPackageDebugFlag }) => {
 
 Hooks.once('init', () => {
     DnD4eTools.initialize();
+    registerConfigs();
 });
 
-Hooks.on('renderSidebarTab', renderSidebarTab);
+Hooks.on('renderSidebarTab', addImportMonsterButton);
+Hooks.on('updateActor', setBloodiedDeadOnHPChange);
+Hooks.once("setup", setDeadIcon);
 
-/**
- * A single ToDo in our list of Todos.
- * @typedef {Object} ToDo
- * @property {string} id - A unique ID to identify this todo.
- * @property {string} label - The text of the todo.
- * @property {boolean} isDone - Marks whether the todo is done.
- * @property {string} userId - The user who owns this todo.
- */
 export default class DnD4eTools {
     static ID = 'foundry-4e-tools';
     static NAME = '4e-tools';
 
     static FLAGS = {
-        TODOS: 'todos'
+        ORIGINAL_DEAD_STATUS_ICON: '',
+        MODDED_DEAD_STATUS_ICON: "modules/foundry-4e-tools/icons/dead.svg"
     }
 
     static SETTINGS = {
@@ -31,16 +30,19 @@ export default class DnD4eTools {
         CREATE_IN_ENCOUNTER_FOLDERS: 'create-in-encounter-folders',
         DO_NOT_DUPLICATE: 'do-not-import-duplicates',
         DO_NOT_DUPLICATE_IN_FOLDER: 'do-not-import-duplicates-in-folder',
+        BLOODIED_ICON: 'bloodied-icon',
+        DEAD_ICON: 'dead-icon',
+        CHANGE_DEAD_ICON: 'change-dead-icon'
     }
 
     static TEMPLATES = {
-        TODOLIST: `modules/${this.ID}/templates/todo-list.hbs`,
         IMPORTER_INPUT: `modules/${this.ID}/templates/importer-input.hbs`,
     }
 
     static devMode() {
         return game.modules.get('_dev-mode')?.api?.getPackageDebugValue(this.ID);
     }
+
     static log(force, ...args) {
         const shouldLog = force || this.devMode();
 
@@ -49,45 +51,18 @@ export default class DnD4eTools {
         }
     }
 
+    static setDeadIcon() {
+        const deadStatus = CONFIG.statusEffects.find(x => x.id === "dead");
+        if (game.settings.get(DnD4eTools.ID, DnD4eTools.SETTINGS.CHANGE_DEAD_ICON)) {
+            deadStatus.icon = DnD4eTools.FLAGS.MODDED_DEAD_STATUS_ICON
+        }
+        else {
+            deadStatus.icon = DnD4eTools.FLAGS.ORIGINAL_DEAD_STATUS_ICON
+        }
+    }
+
     static initialize() {
-        //this.toDoListConfig = new ToDoListConfig();
         console.log(this.NAME + " | Initialising 4E Tools and Masterplan Importer")
-        // game.settings.register(this.ID, this.SETTINGS.INJECT_BUTTON, {
-        //     name: `TOOLS4E.settings.${this.SETTINGS.INJECT_BUTTON}.Name`,
-        //     default: true,
-        //     type: Boolean,
-        //     scope: 'client',
-        //     config: true,
-        //     hint: `TOOLS4E.settings.${this.SETTINGS.INJECT_BUTTON}.Hint`,
-        //     onChange: () => ui.players.render()
-        // });
-
-        game.settings.register(this.ID, this.SETTINGS.CREATE_IN_ENCOUNTER_FOLDERS, {
-            name: `TOOLS4E.settings.${this.SETTINGS.CREATE_IN_ENCOUNTER_FOLDERS}.Name`,
-            default: true,
-            type: Boolean,
-            scope: 'client',
-            config: true,
-            hint: `TOOLS4E.settings.${this.SETTINGS.CREATE_IN_ENCOUNTER_FOLDERS}.Hint`
-        });
-
-        game.settings.register(this.ID, this.SETTINGS.DO_NOT_DUPLICATE, {
-            name: `TOOLS4E.settings.${this.SETTINGS.DO_NOT_DUPLICATE}.Name`,
-            default: true,
-            type: Boolean,
-            scope: 'client',
-            config: true,
-            hint: `TOOLS4E.settings.${this.SETTINGS.DO_NOT_DUPLICATE}.Hint`
-        });
-
-        game.settings.register(this.ID, this.SETTINGS.DO_NOT_DUPLICATE_IN_FOLDER, {
-            name: `TOOLS4E.settings.${this.SETTINGS.DO_NOT_DUPLICATE_IN_FOLDER}.Name`,
-            default: true,
-            type: Boolean,
-            scope: 'client',
-            config: true,
-            hint: `TOOLS4E.settings.${this.SETTINGS.DO_NOT_DUPLICATE_IN_FOLDER}.Hint`
-        });
     }
 }
 

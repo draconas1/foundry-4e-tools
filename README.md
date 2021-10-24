@@ -8,15 +8,16 @@ This requires the D&D 4E setting: https://github.com/EndlesNights/dnd4eBeta
 * **Foundry VTT Compatibility**: 0.8.9
 * **DnD4E system compatibility**: 0.2.43
 
-## Masterplan Importer
-An importer for Monster Data from Masterplan for D&D 4E.  
-You will need https://github.com/draconas1/masterplan-json-export to export the data, this module provides the importer.
-
-### Installation
+## Installation
 * Open the Foundry application and click **"Install Module"** in the **"Addon Modules"** tab.
 * Paste the following link: https://raw.githubusercontent.com/draconas1/foundry-4e-tools/main/module.json
 * Click "Install"
 * Enable it on your game.
+* 
+
+## Masterplan Importer
+An importer for Monster Data from Masterplan for D&D 4E.  
+You will need https://github.com/draconas1/masterplan-json-export to export the data, this module provides the importer.
 
 ### Use
 * The GM will get button in the actors tab for "import monsters"
@@ -32,18 +33,27 @@ The folder import and duplicate checking have configuration options that let you
 ### Addons & Compatibility
 * Prototype tokens will automatically get square auras compatible with [Token Auras](https://foundryvtt.com/packages/token-auras)
 
-### Notes
-There are probably a lot of bugs, here are some I know about:
-1. It still has legacy code and UI for the "todo list" tutorial all over it.
-2. Empty folders can be created for empty encounters.  
-
 ## Tools
-TBD: Auto-bloodied token
+### Auto-Bloodied & Dead 
+
+#### Use
+* Tokens will automatically gain a big bloodied status icon when reduced to bloodied value
+* NPC's will automatically gain a dead status icon and be set as defeated in the combat tracker when reduced to 0 HP.
+* PC's will automatically gain a dying status icon when reduced to 0 HP
+* PC's will automatically gain a dead status icon and be set as defeated in the combat tracker when reduced to -bloodied HP.
+
+Gaining HP will set them back to the relevant status and undefeat them in combat tracker.
+
+#### Configuration
+There are configuration values for automatically setting bloodied and automatically setting the various dead states.
+
+### Replace Dead Status Icon
+I found the dead status icon hard to see in some tokens.  There is now a configuration option that replaces it with a big red skull and crossbones.
 
 ## Data
 Some compendiums of [4th Edition System Reference Document](http://weirdzine.com/wp-content/uploads/2015/07/4E_SRD-1.pdf) compliant data.
 * Weapons
-* TBD: Armour
+* Armour
 
 ### Addons & Compatibility
 * Compendiums are arranged using [Compendium Folders](https://foundryvtt.com/packages/compendium-folders)

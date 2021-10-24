@@ -1,7 +1,7 @@
-import CreatureImporterScreen from "./screens/creature-import.js";
-import DnD4eTools from "./4e-tools.js";
+import CreatureImporterScreen from "../screens/creature-import.js";
+import DnD4eTools from "../4e-tools.js";
 
-export function renderSidebarTab(activeTab, html) {
+export function addImportMonsterButton(activeTab, html) {
     // fire only fr GM on actors tab
     if (activeTab.options.id === "actors" && game.user.isGM) {
         DnD4eTools.log(false, "Adding import button to Actors tab")
