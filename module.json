@@ -3,12 +3,12 @@
 	"title": "Dracs 4E tools for Foundry VTT",
 	"description": "Imports Creatures from Masterplan into Foundry",
 	"author": "Drac",
-	"version": "0.0.5",
+	"version": "0.0.6",
 	"minimumCoreVersion": "0.8.0",
 	"compatibleCoreVersion": "0.8.9",
 	"url": "https://github.com/draconas1/foundry-4e-tools",
 	"manifest": "https://raw.githubusercontent.com/draconas1/foundry-4e-tools/main/module.json",
-	"download": "https://github.com/draconas1/foundry-4e-tools/releases/download/0.0.5/foundry-4e-tools.zip",
+	"download": "https://github.com/draconas1/foundry-4e-tools/releases/download/0.0.6/foundry-4e-tools.zip",
 	"esmodules": [
 		"module/4e-tools.js"
 	],
