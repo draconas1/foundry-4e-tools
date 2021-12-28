@@ -38,16 +38,15 @@ export default class CreatureImporterScreen extends FormApplication {
             for (const encounter of obj) {
                 let folder = undefined
                 let folderId = undefined
+                let createFolder = false
                 if (formData[DnD4eTools.SETTINGS.CREATE_IN_ENCOUNTER_FOLDERS] === true) {
                     folder = game.folders.find(x => x.name === encounter.Name)
                     if (!folder) {
-                        folder = await Folder.create({
-                            name: encounter.Name,
-                            type: "Actor",
-                            parent: null
-                        });
+                        createFolder = true
                     }
-                    folderId = folder.id
+                    else {
+                        folderId = folder.id
+                    }
                 }
 
                 for (const creature of encounter.Creatures) {
@@ -70,6 +69,15 @@ export default class CreatureImporterScreen extends FormApplication {
                             continue;
                         }
                     }
+                    if (createFolder) {
+                        createFolder = false
+                        folder = await Folder.create({
+                            name: encounter.Name,
+                            type: "Actor",
+                            parent: null
+                        });
+                        folderId = folder.id
+                    }
 
                     let actor = await Actor.create(
                         {
@@ -80,16 +88,8 @@ export default class CreatureImporterScreen extends FormApplication {
                             "token" : creature.Token
                         }
                     )
-                    for (const power of creature.Powers) {
-                        //assign obj ID if one was not made
-                        if(!power._id) { power._id = randomID(16); }
-                        await actor.createOwnedItem(power)
-                    }
-                    for (const trait of creature.Traits) {
-                        //assign obj ID if one was not made
-                        if(!trait._id) { trait._id = randomID(16); }
-                        await actor.createOwnedItem(trait)
-                    }
+                    await actor.createEmbeddedDocuments("Item", creature.Powers)
+                    await actor.createEmbeddedDocuments("Item", creature.Traits)
 
                     // work around because advancedCals does not want to be set on import.
                     // also to get the token size to update properly
