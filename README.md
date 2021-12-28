@@ -5,8 +5,8 @@ A collection of tools and utilities for improving QoL running 4E in foundry VTT,
 This requires the D&D 4E setting: https://github.com/EndlesNights/dnd4eBeta
 
 * **Author**: Draconas#9000
-* **Foundry VTT Compatibility**: 0.8.9
-* **DnD4E system compatibility**: 0.2.43
+* **Foundry VTT Compatibility**: 0.8.9 & 9.0
+* **DnD4E system compatibility**: 0.2.50
 
 ## Installation
 * Open the Foundry application and click **"Install Module"** in the **"Addon Modules"** tab.
