@@ -10,7 +10,7 @@ This requires the D&D 4E setting: https://github.com/EndlesNights/dnd4eBeta
 
 ## Installation
 * Open the Foundry application and click **"Install Module"** in the **"Addon Modules"** tab.
-* Paste the following link: https://raw.githubusercontent.com/draconas1/foundry-4e-tools/main/module.json
+* Paste the following link: https://github.com/draconas1/foundry-4e-tools/releases/latest/download/module.json
 * Click "Install"
 * Enable it on your game.
 * 
