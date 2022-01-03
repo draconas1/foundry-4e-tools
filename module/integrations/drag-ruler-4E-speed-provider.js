@@ -16,7 +16,6 @@ export function registerSpeedProvider(SpeedProvider) {
         getRanges(token) {
             const movement = token.actor.data.data.movement
 
-            // A character can always walk it's base speed and dash twice it's base speed
             const ranges = [
                 {range: movement.walk.value, color: "walk"},
                 {range: movement.run.value, color: "run"},
