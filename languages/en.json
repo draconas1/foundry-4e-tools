@@ -2,7 +2,6 @@
   "TOOLS4E" : {
 
     "buttons" : {
-
       "importer-launch-button" : "Import Monsters from Masterplan"
     },
     "import-json-screen" : {
@@ -51,6 +50,14 @@
       "change-dead-icon": {
         "Name": "Change Dead Status Icon",
         "Hint": "Changes the Dead Status icon to be a red skull and crossbones which I found more obvious than the default"
+      }
+    },
+    "dragRuler4ESpeedProvider": {
+      "speeds": {
+        "walk" : "Walk",
+        "run" : "Run",
+        "doubleWalk" : "Double Walk",
+        "doubleRun" : "Double Run"
       }
     },
     "confirms": {
