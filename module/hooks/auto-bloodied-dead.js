@@ -19,34 +19,42 @@ export async function setBloodiedDeadOnHPChange(actor, change, options, userId) 
         }
         DnD4eTools.log(false, newHP + "/" + maxHP)
 
-        // remove any of bloodied, dying or dead as a batch or else we get weird concurrent update issues
-        const statusIds = findEffectIds(bloodied, actor).concat(findEffectIds(dying, actor)).concat(findEffectIds(dead, actor))
-        await actor.deleteEmbeddedDocuments("ActiveEffect", statusIds)
-
-        if (newHP <= bloodiedHP && newHP > 0 && game.settings.get(DnD4eTools.ID, DnD4eTools.SETTINGS.BLOODIED_ICON)) {
-            applyEffectIfNotPresent(bloodied, actor)
-        }
-        if (newHP <= 0 && game.settings.get(DnD4eTools.ID, DnD4eTools.SETTINGS.DEAD_ICON)) {
-            if (actor.data.type === 'NPC') {
-                DnD4eTools.log(false, "NPC Dead!")
-                applyEffectIfNotPresent(dead, actor)
-                defeatInCombat(actor)
+        if (game.settings.get(DnD4eTools.ID, DnD4eTools.SETTINGS.BLOODIED_ICON)) {
+            if(newHP > bloodiedHP) {
+                await actor.deleteEmbeddedDocuments("ActiveEffect", findEffectIds(bloodied, actor))
             }
             else {
-                if (newHP <= 0 - bloodiedHP) {
-                    DnD4eTools.log(false, "PC Dead!")
-                    applyEffectIfNotPresent(dead, actor)
+                setIfNotPresent(bloodied, actor)
+            }
+        }
+
+        if (game.settings.get(DnD4eTools.ID, DnD4eTools.SETTINGS.DEAD_ICON)) {
+            if (newHP <= 0) {
+                if (actor.data.type === 'NPC') {
+                    DnD4eTools.log(false, "NPC Dead!")
+                    setIfNotPresent(dead, actor)
                     defeatInCombat(actor)
                 }
                 else {
-                    DnD4eTools.log(false, "PC Dying!")
-                    applyEffectIfNotPresent(dying, actor)
-                    defeatInCombat(actor, false)
+                    if (newHP <= 0 - bloodiedHP) {
+                        DnD4eTools.log(false, "PC Dead!")
+                        await actor.deleteEmbeddedDocuments("ActiveEffect", findEffectIds(dying, actor))
+                        setIfNotPresent(dead, actor)
+                        defeatInCombat(actor)
+                    }
+                    else {
+                        DnD4eTools.log(false, "PC Dying!")
+                        await actor.deleteEmbeddedDocuments("ActiveEffect", findEffectIds(dead, actor))
+                        setIfNotPresent(dying, actor)
+                        defeatInCombat(actor, false)
+                    }
                 }
             }
-        }
-        if (newHP > 0 && game.settings.get(DnD4eTools.ID, DnD4eTools.SETTINGS.DEAD_ICON)) {
-            defeatInCombat(actor, false)
+            else {
+                defeatInCombat(actor, false)
+                const statusIds = (findEffectIds(dying, actor)).concat(findEffectIds(dead, actor))
+                await actor.deleteEmbeddedDocuments("ActiveEffect", statusIds)
+            }
         }
     }
 
@@ -75,9 +83,9 @@ export async function setBloodiedDeadOnHPChange(actor, change, options, userId) 
         activeCombat.updateEmbeddedDocuments("Combatant", updates)
     }
 
-    function applyEffectIfNotPresent(statusToCheck, actor) {
-        const bloodiedEffect = actor.effects.find(x => x.data.flags.core?.statusId === statusToCheck)
-        if (bloodiedEffect) {
+    function setIfNotPresent(statusToCheck, actor) {
+        const existingEffect = actor.effects.find(x => x.data.flags.core?.statusId === statusToCheck)
+        if (existingEffect) {
             DnD4eTools.log(false, `Actor already has ${statusToCheck}, not reapplying`)
             return
         }
@@ -86,6 +94,7 @@ export async function setBloodiedDeadOnHPChange(actor, change, options, userId) 
         }
 
         const status = CONFIG.statusEffects.find(x => x.id === statusToCheck)
+
         const effect = {
             ...status,
             "label" : game.i18n.localize(status.label),
@@ -97,7 +106,6 @@ export async function setBloodiedDeadOnHPChange(actor, change, options, userId) 
             }
         }
         delete effect.id
-
         ActiveEffect.create(effect, { parent : actor })
     }
 
