@@ -2,6 +2,7 @@ import {setBloodiedDeadOnHPChange} from "./hooks/auto-bloodied-dead.js";
 import {addImportMonsterButton} from "./hooks/import-button.js";
 import {setDeadIcon} from "./hooks/set-dead-icon.js";
 import {registerConfigs} from "./config.js";
+import {registerSpeedProvider} from "./integrations/drag-ruler-4E-speed-provider.js";
 
 Hooks.once('devModeReady', ({ registerPackageDebugFlag }) => {
     registerPackageDebugFlag(DnD4eTools.ID);
@@ -15,6 +16,8 @@ Hooks.once('init', () => {
 Hooks.on('renderSidebarTab', addImportMonsterButton);
 Hooks.on('updateActor', setBloodiedDeadOnHPChange);
 Hooks.once("setup", setDeadIcon);
+// drag ruler integration
+Hooks.once("dragRuler.ready", registerSpeedProvider);
 
 export default class DnD4eTools {
     static ID = 'foundry-4e-tools';
