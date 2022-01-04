@@ -5,7 +5,7 @@ export function registerConfigs() {
         name: `TOOLS4E.settings.${DnD4eTools.SETTINGS.CREATE_IN_ENCOUNTER_FOLDERS}.Name`,
         default: true,
         type: Boolean,
-        scope: 'client',
+        scope: 'world',
         config: true,
         hint: `TOOLS4E.settings.${DnD4eTools.SETTINGS.CREATE_IN_ENCOUNTER_FOLDERS}.Hint`
     });
@@ -14,7 +14,7 @@ export function registerConfigs() {
         name: `TOOLS4E.settings.${DnD4eTools.SETTINGS.DO_NOT_DUPLICATE}.Name`,
         default: true,
         type: Boolean,
-        scope: 'client',
+        scope: 'world',
         config: true,
         hint: `TOOLS4E.settings.${DnD4eTools.SETTINGS.DO_NOT_DUPLICATE}.Hint`
     });
@@ -23,7 +23,7 @@ export function registerConfigs() {
         name: `TOOLS4E.settings.${DnD4eTools.SETTINGS.DO_NOT_DUPLICATE_IN_FOLDER}.Name`,
         default: true,
         type: Boolean,
-        scope: 'client',
+        scope: 'world',
         config: true,
         hint: `TOOLS4E.settings.${DnD4eTools.SETTINGS.DO_NOT_DUPLICATE_IN_FOLDER}.Hint`
     });
@@ -32,7 +32,7 @@ export function registerConfigs() {
         name: `TOOLS4E.settings.${DnD4eTools.SETTINGS.BLOODIED_ICON}.Name`,
         default: true,
         type: Boolean,
-        scope: 'client',
+        scope: 'world',
         config: true,
         hint: `TOOLS4E.settings.${DnD4eTools.SETTINGS.BLOODIED_ICON}.Hint`
     });
@@ -40,7 +40,7 @@ export function registerConfigs() {
         name: `TOOLS4E.settings.${DnD4eTools.SETTINGS.DEAD_ICON}.Name`,
         default: true,
         type: Boolean,
-        scope: 'client',
+        scope: 'world',
         config: true,
         hint: `TOOLS4E.settings.${DnD4eTools.SETTINGS.DEAD_ICON}.Hint`
     });
@@ -48,7 +48,7 @@ export function registerConfigs() {
         name: `TOOLS4E.settings.${DnD4eTools.SETTINGS.CHANGE_DEAD_ICON}.Name`,
         default: false,
         type: Boolean,
-        scope: 'client',
+        scope: 'world',
         config: true,
         hint: `TOOLS4E.settings.${DnD4eTools.SETTINGS.CHANGE_DEAD_ICON}.Hint`,
         onChange: () => DnD4eTools.setDeadIcon()
