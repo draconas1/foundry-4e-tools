@@ -3,6 +3,7 @@ import {addImportMonsterButton} from "./hooks/import-button.js";
 import {setDeadIcon} from "./hooks/set-dead-icon.js";
 import {registerConfigs} from "./config.js";
 import {registerSpeedProvider} from "./integrations/drag-ruler-4E-speed-provider.js";
+import {registerAutoCompletePackage} from "./integrations/autocomplete-inline-properties.js";
 
 Hooks.once('devModeReady', ({ registerPackageDebugFlag }) => {
     registerPackageDebugFlag(DnD4eTools.ID);
@@ -18,6 +19,8 @@ Hooks.on('updateActor', setBloodiedDeadOnHPChange);
 Hooks.once("setup", setDeadIcon);
 // drag ruler integration
 Hooks.once("dragRuler.ready", registerSpeedProvider);
+Hooks.on("aipSetup", registerAutoCompletePackage);
+
 
 export default class DnD4eTools {
     static ID = 'foundry-4e-tools';
