@@ -1,19 +1,18 @@
-![](https://img.shields.io/badge/Foundry-v0.8.9-informational)
+![](https://img.shields.io/badge/Foundry-v0.9-informational)
 # D&D 4E Tools for Foundry VTT
 A collection of tools and utilities for improving QoL running 4E in foundry VTT, distributed as a free module.
 
 This requires the D&D 4E setting: https://github.com/EndlesNights/dnd4eBeta
 
 * **Author**: Draconas#9000
-* **Foundry VTT Compatibility**: 0.8.9 & 9.0
-* **DnD4E system compatibility**: 0.2.50
+* **Foundry VTT Compatibility**: 9.0
+* **DnD4E system compatibility**: 0.2.55
 
 ## Installation
 * Open the Foundry application and click **"Install Module"** in the **"Addon Modules"** tab.
 * Paste the following link: https://github.com/draconas1/foundry-4e-tools/releases/latest/download/module.json
 * Click "Install"
 * Enable it on your game.
-* 
 
 ## Masterplan Importer
 An importer for Monster Data from Masterplan for D&D 4E.  
@@ -50,13 +49,11 @@ There are configuration values for automatically setting bloodied and automatica
 ### Replace Dead Status Icon
 I found the dead status icon hard to see in some tokens.  There is now a configuration option that replaces it with a big red skull and crossbones.
 
-## Data
-Some compendiums of [4th Edition System Reference Document](http://weirdzine.com/wp-content/uploads/2015/07/4E_SRD-1.pdf) compliant data.
-* Weapons
-* Armour
+## Addins
+Compatibility for 4E for the following modules:
+* Auto Complete Inline Properties: https://github.com/ghost-fvtt/FVTT-Autocomplete-Inline-Properties 
+* Drag Ruler: https://github.com/manuelVo/foundryvtt-drag-ruler
 
-### Addons & Compatibility
-* Compendiums are arranged using [Compendium Folders](https://foundryvtt.com/packages/compendium-folders)
 
 # Thanks
 Dan Houston and Dave Barnett both kindly created the SVG art of the 4E power icons for me when I posted a request out to my friends :)
