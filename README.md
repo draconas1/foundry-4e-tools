@@ -49,11 +49,31 @@ There are configuration values for automatically setting bloodied and automatica
 ### Replace Dead Status Icon
 I found the dead status icon hard to see in some tokens.  There is now a configuration option that replaces it with a big red skull and crossbones.
 
+## Compendiums
+### Drac's Items
+#### MM3 Monster Stats Setter
+Add this item to an actor and then run the tem to trigger the attached macro.  The macro will set the HP/defences/other stuff as per MM3 on a business card based on the monsters level and role.
+
+For further details see the description in the item
+
+### Drac's Macros
+Macros all have comments at the start explaining what they are doing.  
+
+#### Required Knowledge
+Private messages the GM with the DC's of monster knowledge checks based on the monsters level.  Also attempts to guess what skill is needed based on the monsters origin, type and other types.  
+
+Designed for use with my imported monsters that have the medium and hard knowledge check info ready and waiting as features that you can dump into the chat.  
+
+#### Toggle Mark
+A demo macro that toggles on a mark status effect on all selected tokens.  Easy to customise to your most common status effects.  
+
+#### Toggle Token Light
+Makes the selected tokens give off light and toggles the "torch" status effect to match.  Brings up a menu with the most common 4E light sources.  
+
 ## Addins
 Compatibility for 4E for the following modules:
 * Auto Complete Inline Properties: https://github.com/ghost-fvtt/FVTT-Autocomplete-Inline-Properties 
 * Drag Ruler: https://github.com/manuelVo/foundryvtt-drag-ruler
-
 
 # Thanks
 Dan Houston and Dave Barnett both kindly created the SVG art of the 4E power icons for me when I posted a request out to my friends :)
