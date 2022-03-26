@@ -49,7 +49,7 @@ export default class CreatureImporterScreen extends FormApplication {
                     }
                 }
 
-                for (const creature of encounter.Creatures) {
+                const processCreature = async (creature, img) => {
                     DnD4eTools.log(false, "Importing " + creature.Name)
                     if (creature.Size) {
                         throw "Invalid JSON: Received JSON for Roll20, you must set the exporter to export Foundry JSON"
@@ -59,14 +59,14 @@ export default class CreatureImporterScreen extends FormApplication {
                     if (formData['handle-duplicates'] === DnD4eTools.SETTINGS.DO_NOT_DUPLICATE_IN_FOLDER) {
                         if (folder && folder.contents.find(x => x.name === creature.Name)) {
                             ui.notifications.info(creature.Name + " already existed in folder " + folder.name)
-                            continue;
+                            return undefined;
                         }
                     }
 
                     if (formData['handle-duplicates'] === DnD4eTools.SETTINGS.DO_NOT_DUPLICATE) {
                         if (game.actors.find(x => x.name === creature.Name)) {
                             ui.notifications.info(creature.Name + " already existed")
-                            continue;
+                            return undefined;
                         }
                     }
                     if (createFolder) {
@@ -79,24 +79,44 @@ export default class CreatureImporterScreen extends FormApplication {
                         folderId = folder.id
                     }
 
-                    let actor = await Actor.create(
-                        {
-                            "name" : creature.Name,
-                            "type" : "NPC",
-                            "data" : creature.Data,
-                            "folder" : folderId,
-                            "token" : creature.Token
-                        }
-                    )
+                    const actorData =  {
+                        "name" : creature.Name,
+                        "type" : "NPC",
+                        "data" : creature.Data,
+                        "folder" : folderId,
+                        "token" : creature.Token
+                    }
+                    if (img) {
+                        actorData.img = img
+                    }
+
+                    let actor = await Actor.create(actorData)
                     await actor.createEmbeddedDocuments("Item", creature.Powers)
                     await actor.createEmbeddedDocuments("Item", creature.Traits)
+                    return actor
+                }
 
-                    // work around because advancedCals does not want to be set on import.
-                    // also to get the token size to update properly
-                    actor.update({
-                        "data.advancedCals" : true,
-                        "data.details.size" : creature.Data.details.size
-                    }, { forceSizeUpdate: true})
+                for (const creature of encounter.Creatures) {
+                    const actor = await processCreature(creature)
+
+                    if (actor) {
+                        // work around because advancedCals does not want to be set on import.
+                        // also to get the token size to update properly
+                        actor.update({
+                            "data.advancedCals" : true,
+                            "data.details.size" : creature.Data.details.size
+                        }, { forceSizeUpdate: true})
+                    }
+
+                }
+
+                for (const trap of encounter.Traps) {
+                    const actor = await processCreature(trap, "icons/svg/trap.svg")
+                    if (actor) {
+                        actor.update({
+                            "data.advancedCals" : false
+                        })
+                    }
                 }
             }
         } catch(err) {
