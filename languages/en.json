@@ -4,6 +4,9 @@
     "buttons" : {
       "importer-launch-button" : "Import Monsters from Masterplan"
     },
+    "context" : {
+      "update-monster-knowledge" : "Update Basic Monster Knowledge"
+    },
     "import-json-screen" : {
       "title" : "Import JSON from Masterplan",
       "label" : "Paste the Foundry JSON you exported from Masterplan below and click import",
@@ -12,17 +15,10 @@
       "create-in-encounter-folders" : "Import creatures into folders based on encounter",
       "no-duplicate-checking" : "Do not check if creatures already exist",
       "do-not-import-duplicates" : "Do not import creatures that already exist (globally)",
-      "do-not-import-duplicates-in-folder" : "Do not import creatures that already exist in the same folder"
+      "do-not-import-duplicates-in-folder" : "Do not import creatures that already exist in the same folder",
+      "update-knowledge-button" : "After import, if you change the basic NPC data (name, type, origin) there is a context menu option in the actor list to update that in the 'Monster Knowledge' features"
     },
-    "button-title": "Open To-Do list",
-    "add-todo": "Add To-Do",
-    "delete-todo": "Delete To-Do",
-    "mark-done": "Mark Done",
     "settings": {
-      "inject-button": {
-        "Name": "Display To-Do List button?",
-        "Hint": "Controls whether or not the To-Do List can be opened from the player list."
-      },
       "create-in-encounter-folders": {
         "Name": "Default: Import into Folders?",
         "Hint": "Default setting for when importing, should monsters be grouped together into a folder named for their encounter?"
@@ -58,12 +54,6 @@
         "run" : "Run",
         "doubleWalk" : "Double Walk",
         "doubleRun" : "Double Run"
-      }
-    },
-    "confirms": {
-      "deleteConfirm": {
-        "Title": "Confirm Deletion",
-        "Content": "Are you sure you want to delete this To-Do? This action cannot be undone."
       }
     }
   }

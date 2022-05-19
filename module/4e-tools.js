@@ -1,5 +1,6 @@
 import {setBloodiedDeadOnHPChange} from "./hooks/auto-bloodied-dead.js";
 import {addImportMonsterButton} from "./hooks/import-button.js";
+import {addActorContextMenuUpdateMonsterKnowledge} from "./hooks/update-knowledge.js";
 import {setDeadIcon} from "./hooks/set-dead-icon.js";
 import {registerConfigs} from "./config.js";
 import {registerSpeedProvider} from "./integrations/drag-ruler-4E-speed-provider.js";
@@ -19,7 +20,9 @@ Hooks.on('updateActor', setBloodiedDeadOnHPChange);
 Hooks.once("setup", setDeadIcon);
 // drag ruler integration
 Hooks.once("dragRuler.ready", registerSpeedProvider);
+//auto complete inline properties integration
 Hooks.on("aipSetup", registerAutoCompletePackage);
+Hooks.on("getActorDirectoryEntryContext", addActorContextMenuUpdateMonsterKnowledge);
 
 
 export default class DnD4eTools {
@@ -32,7 +35,6 @@ export default class DnD4eTools {
     }
 
     static SETTINGS = {
-        INJECT_BUTTON: 'inject-button',
         CREATE_IN_ENCOUNTER_FOLDERS: 'create-in-encounter-folders',
         DO_NOT_DUPLICATE: 'do-not-import-duplicates',
         DO_NOT_DUPLICATE_IN_FOLDER: 'do-not-import-duplicates-in-folder',

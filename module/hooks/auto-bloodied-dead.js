@@ -60,7 +60,7 @@ export async function setBloodiedDeadOnHPChange(actor, change, options, userId) 
 
     function defeatInCombat(actor, defeated = true) {
         const activeCombat = game.combat
-        // if we are not runnign a combat, stop now
+        // if we are not running a combat, stop now
         if (!activeCombat) { return }
         const updates = []
         for (const token of actor.getActiveTokens()) {
