@@ -1,7 +1,7 @@
 {
 	"name": "foundry-4e-tools",
 	"title": "Dracs 4E tools for Foundry VTT",
-	"description": "Imports Creatures from Masterplan into Foundry",
+	"description": "Imports Creatures from Masterplan into Foundry & various other tools for 4E games",
 	"author": "Drac",
 	"version": "1.1.0",
 	"minimumCoreVersion": "0.8.0",
@@ -42,6 +42,13 @@
 			"system": "dnd4e",
 			"path": "./packs/dracs-macros.db",
 			"entity": "Macro"
+		},
+		{
+			"name": "dracs_treasure",
+			"label": "Dracs Treasure Tables",
+			"system": "dnd4e",
+			"path": "./packs/dracs-treasure.db",
+			"entity": "RollTable"
 		}
 	]
 }

@@ -49,12 +49,18 @@ There are configuration values for automatically setting bloodied and automatica
 ### Replace Dead Status Icon
 I found the dead status icon hard to see in some tokens.  There is now a configuration option that replaces it with a big red skull and crossbones.
 
+### Update Monster Knowledge
+Because you might well reskin and retheme a monster once you have imported it into foundry.  Right click option that will appear on NPC actors in the actors list "Update Basic Monster Knowledge", this will update the 2 Monster Knowledge class features to change the basic knowledge (everything in moderate success) to match what is currently set in the character sheet (so name, role, origin etc...) it will try to change names in the power descriptions in hard knowledge, but that is a very ineaxact science so is a best efforts only. 
+
 ## Compendiums
 ### Drac's Items
 #### MM3 Monster Stats Setter
 Add this item to an actor and then run the tem to trigger the attached macro.  The macro will set the HP/defences/other stuff as per MM3 on a business card based on the monsters level and role.
 
 For further details see the description in the item
+
+### Drac's Treasure
+Some roll tables for gems and art objects that I wrote to be more interesting than the ones in the DMG.
 
 ### Drac's Macros
 Macros all have comments at the start explaining what they are doing.  
