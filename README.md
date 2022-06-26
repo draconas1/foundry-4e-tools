@@ -5,8 +5,8 @@ A collection of tools and utilities for improving QoL running 4E in foundry VTT,
 This requires the D&D 4E setting: https://github.com/EndlesNights/dnd4eBeta
 
 * **Author**: Draconas#9000
-* **Foundry VTT Compatibility**: 9.0
-* **DnD4E system compatibility**: 0.2.55
+* **Foundry VTT Compatibility**: 9.0+
+* **DnD4E system compatibility**: 0.2.55+
 
 ## Installation
 * Open the Foundry application and click **"Install Module"** in the **"Addon Modules"** tab.
@@ -49,13 +49,15 @@ There are configuration values for automatically setting bloodied and automatica
 ### Replace Dead Status Icon
 I found the dead status icon hard to see in some tokens.  There is now a configuration option that replaces it with a big red skull and crossbones.
 
-### Update Monster Knowledge
-Because you might well reskin and retheme a monster once you have imported it into foundry.  Right click option that will appear on NPC actors in the actors list "Update Basic Monster Knowledge", this will update the 2 Monster Knowledge class features to change the basic knowledge (everything in moderate success) to match what is currently set in the character sheet (so name, role, origin etc...) it will try to change names in the power descriptions in hard knowledge, but that is a very ineaxact science so is a best efforts only. 
+### Update Monster Knowledge Features
+For if you are reskinning / theming a monster you have imported from masterplan.  This will update the Monster Knowledge (medium) and Monster knowledge (hard) features.  It will change the base info (the stuff you get in Monster Knowledge Medium) to match what is in the character sheet, and will make an effort to replace the monsters name in the power text with the new one (but this is an extremely ineact science).  It does not update the power descriptions at the moment.  
+
+This is accessed as a context menu item on NPC actors.  
 
 ## Compendiums
 ### Drac's Items
 #### MM3 Monster Stats Setter
-Add this item to an actor and then run the tem to trigger the attached macro.  The macro will set the HP/defences/other stuff as per MM3 on a business card based on the monsters level and role.
+Add this item to an actor and then roll the item to trigger the attached macro.  The macro will set the HP/defences/other stuff as per MM3 on a business card based on the monsters level and role.
 
 For further details see the description in the item
 
