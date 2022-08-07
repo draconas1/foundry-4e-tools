@@ -32,9 +32,13 @@ async function updateMonsterKnowledge(actor) {
             lines = lines.map(x => x.replaceAll(oldName, actor.data.name).replaceAll(oldName.toLowerCase(), actor.data.name.toLowerCase()))
 
             lines[0] = `<h1>${actor.data.name}</h1>`
-            lines[1] = `<p><strong>Role: </strong>level ${details.level} ${config.actorSizes[details.size]} ${config.creatureRoleSecond[details.role.secondary]} ${config.creatureRole[details.role.primary]}${details.role.leader ? " (leader)" : ""}</p>`
-            lines[2] = `<p><strong>Type: </strong>${config.creatureOrigin[details.origin]} ${config.creatureType[details.type]} ${details.other ? "(" + details.other + ")" : ""}</p>`
-            lines[3] = `<p><strong>Typical Alignment: </strong>${details.alignment}</p>`
+            let i = 1
+            if (lines[1].startsWith('<h2>')) {
+                i = 2
+            }
+            lines[i] = `<p><strong>Role: </strong>level ${details.level} ${config.actorSizes[details.size]} ${config.creatureRoleSecond[details.role.secondary]} ${config.creatureRole[details.role.primary]}${details.role.leader ? " (leader)" : ""}</p>`
+            lines[i + 1] = `<p><strong>Type: </strong>${config.creatureOrigin[details.origin]} ${config.creatureType[details.type]} ${details.other ? "(" + details.other + ")" : ""}</p>`
+            lines[i + 2] = `<p><strong>Typical Alignment: </strong>${details.alignment}</p>`
             const newDescription = lines.join("\n")
             await knowledge.update({"data.description.value" : newDescription})
         }

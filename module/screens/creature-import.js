@@ -35,6 +35,8 @@ export default class CreatureImporterScreen extends FormApplication {
         }
 
         try {
+            const updateActors = formData['updateActors']
+
             for (const encounter of obj) {
                 let folder = undefined
                 let folderId = undefined
@@ -55,18 +57,33 @@ export default class CreatureImporterScreen extends FormApplication {
                         throw "Invalid JSON: Received JSON for Roll20, you must set the exporter to export Foundry JSON"
                     }
 
+                    let toUpdate = null;
+
                     // duplicate check
                     if (formData['handle-duplicates'] === DnD4eTools.SETTINGS.DO_NOT_DUPLICATE_IN_FOLDER) {
                         if (folder && folder.contents.find(x => x.name === creature.Name)) {
-                            ui.notifications.info(creature.Name + " already existed in folder " + folder.name)
-                            return undefined;
+
+                            if (updateActors) {
+                                ui.notifications.info("Updating " + creature.Name + " in folder " + folder.name)
+                                toUpdate = folder.contents.find(x => x.name === creature.Name)
+                            }
+                            else {
+                                ui.notifications.info(creature.Name + " already existed in folder " + folder.name)
+                                return undefined;
+                            }
                         }
                     }
 
                     if (formData['handle-duplicates'] === DnD4eTools.SETTINGS.DO_NOT_DUPLICATE) {
                         if (game.actors.find(x => x.name === creature.Name)) {
-                            ui.notifications.info(creature.Name + " already existed")
-                            return undefined;
+                            if (updateActors) {
+                                ui.notifications.info("Updating " + creature.Name)
+                                toUpdate = game.actors.find(x => x.name === creature.Name)
+                            }
+                            else {
+                                ui.notifications.info(creature.Name + " already existed")
+                                return undefined;
+                            }
                         }
                     }
                     if (createFolder) {
@@ -79,21 +96,32 @@ export default class CreatureImporterScreen extends FormApplication {
                         folderId = folder.id
                     }
 
-                    const actorData =  {
-                        "name" : creature.Name,
-                        "type" : "NPC",
-                        "data" : creature.Data,
-                        "folder" : folderId,
-                        "token" : creature.Token
+                    if (toUpdate) {
+                        await toUpdate.update({ data: creature.Data })
+                        const items = await toUpdate.getEmbeddedCollection("Item")
+                        const itemIds = items.map(x => x.id)
+                        await toUpdate.deleteEmbeddedDocuments("Item", itemIds)
+                        await toUpdate.createEmbeddedDocuments("Item", creature.Powers)
+                        await toUpdate.createEmbeddedDocuments("Item", creature.Traits)
+                        return toUpdate
                     }
-                    if (img) {
-                        actorData.img = img
-                    }
+                    else {
+                        const actorData =  {
+                            "name" : creature.Name,
+                            "type" : "NPC",
+                            "data" : creature.Data,
+                            "folder" : folderId,
+                            "token" : creature.Token
+                        }
+                        if (img) {
+                            actorData.img = img
+                        }
 
-                    let actor = await Actor.create(actorData)
-                    await actor.createEmbeddedDocuments("Item", creature.Powers)
-                    await actor.createEmbeddedDocuments("Item", creature.Traits)
-                    return actor
+                        let actor = await Actor.create(actorData)
+                        await actor.createEmbeddedDocuments("Item", creature.Powers)
+                        await actor.createEmbeddedDocuments("Item", creature.Traits)
+                        return actor
+                    }
                 }
 
                 for (const creature of encounter.Creatures) {
