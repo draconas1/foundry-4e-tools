@@ -19,9 +19,6 @@
 			"path": "languages/en.json"
 		}
 	],
-	"styles": [
-		"styles/4etools.css"
-	],
 	"dependencies": [
 		{
 			"name": "dnd4e",
