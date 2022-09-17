@@ -5,7 +5,7 @@ export function addActorContextMenuUpdateMonsterKnowledge(html, entryOptions) {
         condition: target => {
             const id = target.attr('data-document-id')
             const actor = game.actors.get(id);
-            return actor?.data.type === 'NPC'
+            return actor?.type === 'NPC'
         },
         icon: '<i class="fas fa-book"></i>',
         callback: target => {
@@ -23,15 +23,15 @@ async function updateMonsterKnowledge(actor) {
             ui.notifications.error(`Could not find class feature ${knowledgeName} was this monster imported from Masterplan?`)
         }
         else {
-            const details = actor.data.data.details
-            const description = knowledge.data.data.description.value;
+            const details = actor.system.details
+            const description = knowledge.system.description.value;
             let lines = description.split("\n")
             const config = game.dnd4eBeta.config
             // try to get the old name out of the power effects.  This is an imperfect science.
             const oldName = lines[0].replace('<h1>', '').replace('</h1>', '')
-            lines = lines.map(x => x.replaceAll(oldName, actor.data.name).replaceAll(oldName.toLowerCase(), actor.data.name.toLowerCase()))
+            lines = lines.map(x => x.replaceAll(oldName, actor.name).replaceAll(oldName.toLowerCase(), actor.name.toLowerCase()))
 
-            lines[0] = `<h1>${actor.data.name}</h1>`
+            lines[0] = `<h1>${actor.name}</h1>`
             let i = 1
             if (lines[1].startsWith('<h2>')) {
                 i = 2
@@ -49,5 +49,5 @@ async function updateMonsterKnowledge(actor) {
 
     await updateKnowledge(actor, hardKnowledgeName)
     await updateKnowledge(actor, medKnowledgeName)
-    ui.notifications.info(actor.data.name + " updated")
+    ui.notifications.info(actor.system.name + " updated")
 }

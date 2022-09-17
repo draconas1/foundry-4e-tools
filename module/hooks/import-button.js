@@ -29,7 +29,7 @@ export function addImportMonsterButton(activeTab, html) {
                     title: "Are You Sure?",
                     content: "Nuke all The Actors?",
                     yes: () => {
-                        game.actors.forEach(t => { if (!t.data.folder) { t.delete(); } });
+                        game.actors.forEach(t => { if (!t.folder) { t.delete(); } });
                     },
                     no: () => {ui.notifications.info("No was pressed!")},
                     defaultYes: true

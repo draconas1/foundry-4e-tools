@@ -14,7 +14,7 @@ export function registerSpeedProvider(SpeedProvider) {
         }
 
         getRanges(token) {
-            const movement = token.actor.data.data.movement
+            const movement = token.actor.system.movement
 
             const ranges = [
                 {range: movement.walk.value, color: "walk"},

@@ -15,7 +15,7 @@ export function registerAutoCompletePackage(packageConfig) {
                 fieldConfigs: [
                     {
                         selector: `.tab[data-tab="effects"] .key input[type="text"]`,
-                        defaultPath: "data",
+                        defaultPath: "system",
                         showButton: true,
                         allowHotkey: true,
                         dataMode: DATA_MODE.CUSTOM,
@@ -95,4 +95,4 @@ function createNestedObject ( base, names, value ) {
 
     // Return the last object in the hierarchy:
     return base;
-};
+}

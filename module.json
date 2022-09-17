@@ -2,13 +2,19 @@
 	"name": "foundry-4e-tools",
 	"title": "Dracs 4E tools for Foundry VTT",
 	"description": "Imports Creatures from Masterplan into Foundry & various other tools for 4E games",
-	"author": "Drac",
-	"version": "1.1.0",
-	"minimumCoreVersion": "0.8.0",
-	"compatibleCoreVersion": "9",
+	"authors": [ { "name" : "Drac"} ],
+	"version": "2.0.0",
+	"compatibility":{
+		"minimum": 10,
+		"verified": 10
+	},
+	"minimumCoreVersion": "10",
 	"url": "https://github.com/draconas1/foundry-4e-tools",
 	"manifest": "https://github.com/draconas1/foundry-4e-tools/releases/latest/download/module.json",
 	"download": "https://github.com/draconas1/foundry-4e-tools/releases/latest/download/module.zip",
+	"license": "https://raw.githubusercontent.com/draconas1/foundry-4e-tools/main/LICENSE",
+	"readme": "https://github.com/draconas1/foundry-4e-tools/blob/main/README.md",
+	"bugs": "https://github.com/draconas1/foundry-4e-tools/issues",
 	"esmodules": [
 		"module/4e-tools.js"
 	],
@@ -19,33 +25,40 @@
 			"path": "languages/en.json"
 		}
 	],
-	"dependencies": [
-		{
-			"name": "dnd4e",
-			"type": "system"
-		}
-	],
+	"relationships": {
+		"systems": [
+			{
+				"id": "dnd4e",
+				"type": "system",
+				"manifest": "https://raw.githubusercontent.com/EndlesNights/dnd4eBeta/main/system.json",
+				"compatibility": {
+					"minimum": "0.3.0",
+					"verified": "0.3.3"
+				}
+			}
+		]
+	},
 	"packs": [
 		{
 			"name": "dracs_items",
 			"label": "Dracs Items",
 			"system": "dnd4e",
 			"path": "./packs/dracs-items.db",
-			"entity": "Item"
+			"type": "Item"
 		},
 		{
 			"name": "dracs_macos",
 			"label": "Dracs Macros",
 			"system": "dnd4e",
 			"path": "./packs/dracs-macros.db",
-			"entity": "Macro"
+			"type": "Macro"
 		},
 		{
 			"name": "dracs_treasure",
 			"label": "Dracs Treasure Tables",
 			"system": "dnd4e",
 			"path": "./packs/dracs-treasure.db",
-			"entity": "RollTable"
+			"type": "RollTable"
 		}
 	]
 }

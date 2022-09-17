@@ -8,16 +8,16 @@ export async function setBloodiedDeadOnHPChange(actor, change, options, userId) 
     // only fire this for the user that changed the hp in the first place
     if (userId !== game.user.id) { return;}
     // only fire if the HP changed
-    if(change.data?.attributes?.hp?.hasOwnProperty('value')) {
-        DnD4eTools.log(false, "Firing bloodied update for " + game.users.get(userId).data.name)
-        const newHP = change.data.attributes.hp.value
-        const maxHP = actor.data.data.attributes.hp.max
-        const bloodiedHP = maxHP / 2
+    if(change.system?.attributes?.hp?.hasOwnProperty('value')) {
+        DnD4eTools.log(false, "Firing bloodied update for " + game.users.get(userId).name)
+        const newHP = change.system.attributes.hp.value
+        const maxHP = actor.system.attributes.hp.max
         if (!maxHP) {
             DnD4eTools.log(false, "Could not get actor max HP")
             return;
         }
         DnD4eTools.log(false, newHP + "/" + maxHP)
+        const bloodiedHP = maxHP / 2
 
         if (game.settings.get(DnD4eTools.ID, DnD4eTools.SETTINGS.BLOODIED_ICON)) {
             if(newHP > bloodiedHP) {
@@ -64,7 +64,7 @@ export async function setBloodiedDeadOnHPChange(actor, change, options, userId) 
         if (!activeCombat) { return }
         const updates = []
         for (const token of actor.getActiveTokens()) {
-            const matchingCombatants = activeCombat.combatants?.contents?.filter(c => c.data.tokenId === token.id)
+            const matchingCombatants = activeCombat.combatants?.contents?.filter(c => c.tokenId === token.id)
             if (!matchingCombatants || matchingCombatants.length === 0) {
                 continue
             }
@@ -84,7 +84,7 @@ export async function setBloodiedDeadOnHPChange(actor, change, options, userId) 
     }
 
     function setIfNotPresent(statusToCheck, actor) {
-        const existingEffect = actor.effects.find(x => x.data.flags.core?.statusId === statusToCheck)
+        const existingEffect = actor.effects.find(x => x.flags.core?.statusId === statusToCheck)
         if (existingEffect) {
             DnD4eTools.log(false, `Actor already has ${statusToCheck}, not reapplying`)
             return
@@ -110,6 +110,6 @@ export async function setBloodiedDeadOnHPChange(actor, change, options, userId) 
     }
 
     function findEffectIds(statusToCheck, actor) {
-        return actor.effects.filter(effect => effect.data.flags.core?.statusId === statusToCheck).map(effect => effect.id)
+        return actor.effects.filter(effect => effect.flags.core?.statusId === statusToCheck).map(effect => effect.id)
     }
 }

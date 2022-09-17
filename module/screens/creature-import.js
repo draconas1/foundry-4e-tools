@@ -26,7 +26,7 @@ export default class CreatureImporterScreen extends FormApplication {
 
     async _updateObject(event, formData) {
         let obj = "";
-        try{
+        try {
             obj = JSON.parse(('Pasted content: ', formData.masterPlanInput))
         } catch(err) {
             DnD4eTools.log(false, "Invalid JSON Input " + err)
@@ -97,7 +97,7 @@ export default class CreatureImporterScreen extends FormApplication {
                     }
 
                     if (toUpdate) {
-                        await toUpdate.update({ data: creature.Data })
+                        await toUpdate.update({ system: creature.Data })
                         const items = await toUpdate.getEmbeddedCollection("Item")
                         const itemIds = items.map(x => x.id)
                         await toUpdate.deleteEmbeddedDocuments("Item", itemIds)
@@ -109,7 +109,7 @@ export default class CreatureImporterScreen extends FormApplication {
                         const actorData =  {
                             "name" : creature.Name,
                             "type" : "NPC",
-                            "data" : creature.Data,
+                            "system" : creature.Data,
                             "folder" : folderId,
                             "token" : creature.Token
                         }
@@ -131,8 +131,8 @@ export default class CreatureImporterScreen extends FormApplication {
                         // work around because advancedCals does not want to be set on import.
                         // also to get the token size to update properly
                         actor.update({
-                            "data.advancedCals" : true,
-                            "data.details.size" : creature.Data.details.size
+                            "system.advancedCals" : true,
+                            "system.details.size" : creature.Data.details.size
                         }, { forceSizeUpdate: true})
                     }
 
@@ -142,7 +142,7 @@ export default class CreatureImporterScreen extends FormApplication {
                     const actor = await processCreature(trap, "icons/svg/trap.svg")
                     if (actor) {
                         actor.update({
-                            "data.advancedCals" : false
+                            "system.advancedCals" : false
                         })
                     }
                 }
