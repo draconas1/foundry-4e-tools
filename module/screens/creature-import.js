@@ -97,7 +97,8 @@ export default class CreatureImporterScreen extends FormApplication {
                     }
 
                     if (toUpdate) {
-                        await toUpdate.update({ system: creature.Data })
+                        const flags = creature.Flags !== undefined ? creature.Flags.masterplan : { "imported" : true }
+                        await toUpdate.update({ "system": creature.Data, "flags.masterplan": flags })
                         const items = await toUpdate.getEmbeddedCollection("Item")
                         const itemIds = items.map(x => x.id)
                         await toUpdate.deleteEmbeddedDocuments("Item", itemIds)
@@ -106,12 +107,15 @@ export default class CreatureImporterScreen extends FormApplication {
                         return toUpdate
                     }
                     else {
+                        const flags = creature.Flags !== undefined ? creature.Flags : { "masterplan.imported" : true }
+
                         const actorData =  {
                             "name" : creature.Name,
                             "type" : "NPC",
                             "system" : creature.Data,
                             "folder" : folderId,
-                            "token" : creature.Token
+                            "token" : creature.Token,
+                            "flags" : flags
                         }
                         if (img) {
                             actorData.img = img
@@ -132,8 +136,7 @@ export default class CreatureImporterScreen extends FormApplication {
                         // also to get the token size to update properly
                         actor.update({
                             "system.advancedCals" : true,
-                            "system.details.size" : creature.Data.details.size,
-                            "flags.masterplan.imported" : true
+                            "system.details.size" : creature.Data.details.size
                         }, { forceSizeUpdate: true})
                     }
 
