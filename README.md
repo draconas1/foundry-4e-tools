@@ -1,12 +1,12 @@
-![](https://img.shields.io/badge/Foundry-v0.9-informational)
+![](https://img.shields.io/badge/Foundry-v10-informational)
 # D&D 4E Tools for Foundry VTT
 A collection of tools and utilities for improving QoL running 4E in foundry VTT, distributed as a free module.
 
 This requires the D&D 4E setting: https://github.com/EndlesNights/dnd4eBeta
 
 * **Author**: Draconas#9000
-* **Foundry VTT Compatibility**: 9.0+
-* **DnD4E system compatibility**: 0.2.55+
+* **Foundry VTT Compatibility**: 10.0+
+* **DnD4E system compatibility**: 0.3.0+
 
 ## Installation
 * Open the Foundry application and click **"Install Module"** in the **"Addon Modules"** tab.
