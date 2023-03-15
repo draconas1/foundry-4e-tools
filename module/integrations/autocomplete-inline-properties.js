@@ -46,6 +46,8 @@ function customGetter(sheet) {
 
     Object.keys(game.dnd4eBeta.config.effectTypes).forEach((key) => keywords.power.push(key))
     Object.keys(game.dnd4eBeta.config.powerSource).forEach((key) => keywords.power.push(key))
+    Object.keys(game.dnd4eBeta.config.toolKeys).forEach((key) => keywords.power.push(key))
+    Object.keys(game.dnd4eBeta.config.rangeKeys).forEach((key) => keywords.power.push(key))
 
     Object.keys(game.dnd4eBeta.config.weaponGroup).forEach((key) => keywords.weapon.push(key))
     Object.keys(game.dnd4eBeta.config.weaponProperties).forEach((key) => keywords.weapon.push(key))
