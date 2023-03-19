@@ -54,8 +54,13 @@ function customGetter(sheet) {
     Object.keys(game.dnd4eBeta.config.weaponGroup).forEach((key) => keywords.weapon.push(key))
     Object.keys(game.dnd4eBeta.config.weaponProperties).forEach((key) => keywords.weapon.push(key))
 
+    // old
     if (game.dnd4eBeta.config.implementGroup) {
         Object.keys(game.dnd4eBeta.config.implementGroup).forEach((key) => keywords.weapon.push(key))
+    }
+    // new
+    if (game.dnd4eBeta.config.implement) {
+        Object.keys(game.dnd4eBeta.config.implement).forEach((key) => keywords.weapon.push(key))
     }
 
     Object.keys(game.dnd4eBeta.config.damageTypes).forEach((key) => {
