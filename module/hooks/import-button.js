@@ -3,7 +3,7 @@ import DnD4eTools from "../4e-tools.js";
 
 export function addImportMonsterButton(activeTab, html) {
     // fire only for GM on actors tab
-    if (activeTab.options.id === "actors" && game.user.isGM) {
+    if (activeTab instanceof ActorDirectory && game.user.isGM) {
         DnD4eTools.log(false, "Adding import button to Actors tab")
 
         // create localized tooltip

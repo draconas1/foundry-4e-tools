@@ -17,7 +17,7 @@ export async function setBloodiedDeadOnHPChange(actor, change, options, userId) 
             return;
         }
         DnD4eTools.log(false, newHP + "/" + maxHP)
-        const bloodiedHP = maxHP / 2
+        const bloodiedHP = actor.system.details.bloodied
 
         if (game.settings.get(DnD4eTools.ID, DnD4eTools.SETTINGS.BLOODIED_ICON)) {
             if(newHP > bloodiedHP) {
@@ -30,7 +30,7 @@ export async function setBloodiedDeadOnHPChange(actor, change, options, userId) 
 
         if (game.settings.get(DnD4eTools.ID, DnD4eTools.SETTINGS.DEAD_ICON)) {
             if (newHP <= 0) {
-                if (actor.data.type === 'NPC') {
+                if (actor.type === 'NPC') {
                     DnD4eTools.log(false, "NPC Dead!")
                     setIfNotPresent(dead, actor)
                     defeatInCombat(actor)
@@ -84,7 +84,7 @@ export async function setBloodiedDeadOnHPChange(actor, change, options, userId) 
     }
 
     function setIfNotPresent(statusToCheck, actor) {
-        const existingEffect = actor.effects.find(x => x.flags.core?.statusId === statusToCheck)
+        const existingEffect = actor.effects.find(x => x.statuses.has(statusToCheck))
         if (existingEffect) {
             DnD4eTools.log(false, `Actor already has ${statusToCheck}, not reapplying`)
             return
@@ -98,9 +98,9 @@ export async function setBloodiedDeadOnHPChange(actor, change, options, userId) 
         const effect = {
             ...status,
             "label" : game.i18n.localize(status.label),
+            "statuses" : [statusToCheck],
             "flags": {
                 "core": {
-                    "statusId": statusToCheck,
                     "overlay": true
                 }
             }
@@ -110,6 +110,6 @@ export async function setBloodiedDeadOnHPChange(actor, change, options, userId) 
     }
 
     function findEffectIds(statusToCheck, actor) {
-        return actor.effects.filter(effect => effect.flags.core?.statusId === statusToCheck).map(effect => effect.id)
+        return actor.effects.filter(effect => effect.statuses.has(statusToCheck)).map(effect => effect.id)
     }
 }
