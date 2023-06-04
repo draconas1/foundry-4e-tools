@@ -5,13 +5,13 @@ A collection of tools and utilities for improving QoL running 4E in foundry VTT,
 This requires the D&D 4E setting: https://github.com/EndlesNights/dnd4eBeta
 
 * **Author**: Draconas#9000
-* **Foundry VTT Compatibility**: 10.0+
-* **DnD4E system compatibility**: 0.3.0+
+* **Foundry VTT Compatibility**: 11.0+
+* **DnD4E system compatibility**: 0.4.1+
 
 ## Installation
 * Open the Foundry application and click **"Install Module"** in the **"Addon Modules"** tab.
-* Paste the following link: https://github.com/draconas1/foundry-4e-tools/releases/latest/download/module.json
-* Click "Install"
+* Search for **"Drac"** and you will see **"Dracs 4E tools for Foundry VTT"**.  
+* Click the install button
 * Enable it on your game.
 
 ## Masterplan Importer
@@ -65,7 +65,7 @@ For further details see the description in the item
 Some roll tables for gems and art objects that I wrote to be more interesting than the ones in the DMG.
 
 ### Drac's Macros
-Macros all have comments at the start explaining what they are doing.  
+A selection of macros for working with things in 4E.  Macros all have comments at the start explaining what they are doing.  
 
 #### Required Knowledge
 Private messages the GM with the DC's of monster knowledge checks based on the monsters level.  Also attempts to guess what skill is needed based on the monsters origin, type and other types.  

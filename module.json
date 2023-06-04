@@ -2,11 +2,16 @@
 	"name": "foundry-4e-tools",
 	"title": "Dracs 4E tools for Foundry VTT",
 	"description": "Imports Creatures from Masterplan into Foundry & various other tools for 4E games",
-	"authors": [ { "name" : "Drac"} ],
-	"version": "3.0.0",
+	"authors": [
+		{
+			"name" : "Drac",
+			"discord" : "Draconas#1417"
+		}
+	],
+	"version": "3.0.1",
 	"compatibility":{
 		"minimum": 11,
-		"verified": 11
+		"verified": 11.300
 	},
 	"minimumCoreVersion": "11",
 	"url": "https://github.com/draconas1/foundry-4e-tools",
@@ -32,8 +37,8 @@
 				"type": "system",
 				"manifest": "https://raw.githubusercontent.com/EndlesNights/dnd4eBeta/main/system.json",
 				"compatibility": {
-					"minimum": "0.3.0",
-					"verified": "0.3.3"
+					"minimum": "0.4.0",
+					"verified": "0.4.2"
 				}
 			}
 		]
