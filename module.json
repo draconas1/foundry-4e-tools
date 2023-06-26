@@ -1,69 +1,85 @@
 {
-	"name": "foundry-4e-tools",
-	"title": "Dracs 4E tools for Foundry VTT",
-	"description": "Imports Creatures from Masterplan into Foundry & various other tools for 4E games",
-	"authors": [
-		{
-			"name" : "Drac",
-			"discord" : "Draconas#1417"
-		}
-	],
-	"version": "3.0.1",
-	"compatibility":{
-		"minimum": 11,
-		"verified": 11.300
-	},
-	"minimumCoreVersion": "11",
-	"url": "https://github.com/draconas1/foundry-4e-tools",
-	"manifest": "https://github.com/draconas1/foundry-4e-tools/releases/latest/download/module.json",
-	"download": "https://github.com/draconas1/foundry-4e-tools/releases/latest/download/module.zip",
-	"license": "https://raw.githubusercontent.com/draconas1/foundry-4e-tools/main/LICENSE",
-	"readme": "https://github.com/draconas1/foundry-4e-tools/blob/main/README.md",
-	"bugs": "https://github.com/draconas1/foundry-4e-tools/issues",
-	"esmodules": [
-		"module/4e-tools.js"
-	],
-	"languages": [
-		{
-			"lang": "en",
-			"name": "English",
-			"path": "languages/en.json"
-		}
-	],
-	"relationships": {
-		"systems": [
-			{
-				"id": "dnd4e",
-				"type": "system",
-				"manifest": "https://raw.githubusercontent.com/EndlesNights/dnd4eBeta/main/system.json",
-				"compatibility": {
-					"minimum": "0.4.0",
-					"verified": "0.4.2"
-				}
-			}
-		]
-	},
-	"packs": [
-		{
-			"name": "dracs_items",
-			"label": "Dracs Items",
-			"system": "dnd4e",
-			"path": "./packs/dracs-items.db",
-			"type": "Item"
-		},
-		{
-			"name": "dracs_macos",
-			"label": "Dracs Macros",
-			"system": "dnd4e",
-			"path": "./packs/dracs-macros.db",
-			"type": "Macro"
-		},
-		{
-			"name": "dracs_treasure",
-			"label": "Dracs Treasure Tables",
-			"system": "dnd4e",
-			"path": "./packs/dracs-treasure.db",
-			"type": "RollTable"
-		}
-	]
+  "title": "Dracs 4E tools for Foundry VTT",
+  "description": "Imports Creatures from Masterplan into Foundry &amp; various other tools for 4E games",
+  "authors": [
+    {
+      "name": "Drac",
+      "discord": "Draconas#1417",
+      "flags": {}
+    }
+  ],
+  "version": "3.0.2",
+  "compatibility": {
+    "minimum": "11",
+    "verified": "11.300"
+  },
+  "url": "https://github.com/draconas1/foundry-4e-tools",
+  "manifest": "https://github.com/draconas1/foundry-4e-tools/releases/latest/download/module.json",
+  "download": "https://github.com/draconas1/foundry-4e-tools/releases/download/3.0.1/module.zip",
+  "license": "https://raw.githubusercontent.com/draconas1/foundry-4e-tools/main/LICENSE",
+  "readme": "https://github.com/draconas1/foundry-4e-tools/blob/main/README.md",
+  "bugs": "https://github.com/draconas1/foundry-4e-tools/issues",
+  "esmodules": [
+    "module/4e-tools.js"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "languages/en.json",
+      "flags": {}
+    }
+  ],
+  "relationships": {
+    "systems": [
+      {
+        "id": "dnd4e",
+        "type": "system",
+        "manifest": "https://raw.githubusercontent.com/EndlesNights/dnd4eBeta/main/system.json",
+        "compatibility": {
+          "minimum": "0.4.0",
+          "verified": "0.4.2"
+        }
+      }
+    ]
+  },
+  "packs": [
+    {
+      "name": "dracs_items",
+      "label": "Dracs Items",
+      "system": "dnd4e",
+      "path": "packs/dracs-items",
+      "type": "Item",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {}
+    },
+    {
+      "name": "dracs_macos",
+      "label": "Dracs Macros",
+      "system": "dnd4e",
+      "path": "packs/dracs-macros",
+      "type": "Macro",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {}
+    },
+    {
+      "name": "dracs_treasure",
+      "label": "Dracs Treasure Tables",
+      "system": "dnd4e",
+      "path": "packs/dracs-treasure",
+      "type": "RollTable",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {}
+    }
+  ],
+  "id": "foundry-4e-tools"
 }
