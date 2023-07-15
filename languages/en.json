@@ -34,7 +34,7 @@
       },
       "bloodied-icon": {
         "Name": "Auto Bloodied",
-        "Hint": "Apply the Bloodied status icon (large) automatically when a creature is bloodied."
+        "Hint": "Apply the Bloodied status icon automatically when a creature is bloodied."
       },
       "dead-icon": {
         "Name": "Auto Defeated",
@@ -47,6 +47,10 @@
       "change-dead-icon": {
         "Name": "Change Dead Status Icon",
         "Hint": "Changes the Dead Status icon to be a red skull and crossbones which I found more obvious than the default"
+      },
+      "large-bloodied-icon": {
+        "Name": "Auto Bloodied Status will be Large",
+        "Hint": "The bloodied status icon that is auto-applied will be a large central icon rather than a small standard effect"
       }
     },
     "dragRuler4ESpeedProvider": {

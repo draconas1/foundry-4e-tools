@@ -24,7 +24,7 @@ export async function setBloodiedDeadOnHPChange(actor, change, options, userId) 
                 await actor.deleteEmbeddedDocuments("ActiveEffect", findEffectIds(bloodied, actor))
             }
             else {
-                setIfNotPresent(bloodied, actor)
+                setIfNotPresent(bloodied, actor, game.settings.get(DnD4eTools.ID, DnD4eTools.SETTINGS.LARGE_BLOODIED_ICON))
             }
         }
 
@@ -83,7 +83,7 @@ export async function setBloodiedDeadOnHPChange(actor, change, options, userId) 
         activeCombat.updateEmbeddedDocuments("Combatant", updates)
     }
 
-    function setIfNotPresent(statusToCheck, actor) {
+    function setIfNotPresent(statusToCheck, actor, overlay = true) {
         const existingEffect = actor.effects.find(x => x.statuses.has(statusToCheck))
         if (existingEffect) {
             DnD4eTools.log(false, `Actor already has ${statusToCheck}, not reapplying`)
@@ -101,7 +101,7 @@ export async function setBloodiedDeadOnHPChange(actor, change, options, userId) 
             "statuses" : [statusToCheck],
             "flags": {
                 "core": {
-                    "overlay": true
+                    "overlay": overlay
                 }
             }
         }

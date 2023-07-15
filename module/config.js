@@ -36,6 +36,14 @@ export function registerConfigs() {
         config: true,
         hint: `TOOLS4E.settings.${DnD4eTools.SETTINGS.BLOODIED_ICON}.Hint`
     });
+    game.settings.register(DnD4eTools.ID, DnD4eTools.SETTINGS.LARGE_BLOODIED_ICON, {
+        name: `TOOLS4E.settings.${DnD4eTools.SETTINGS.LARGE_BLOODIED_ICON}.Name`,
+        default: true,
+        type: Boolean,
+        scope: 'world',
+        config: true,
+        hint: `TOOLS4E.settings.${DnD4eTools.SETTINGS.LARGE_BLOODIED_ICON}.Hint`
+    });
     game.settings.register(DnD4eTools.ID, DnD4eTools.SETTINGS.DEAD_ICON, {
         name: `TOOLS4E.settings.${DnD4eTools.SETTINGS.DEAD_ICON}.Name`,
         default: true,

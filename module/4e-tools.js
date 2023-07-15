@@ -40,7 +40,8 @@ export default class DnD4eTools {
         DO_NOT_DUPLICATE_IN_FOLDER: 'do-not-import-duplicates-in-folder',
         BLOODIED_ICON: 'bloodied-icon',
         DEAD_ICON: 'dead-icon',
-        CHANGE_DEAD_ICON: 'change-dead-icon'
+        CHANGE_DEAD_ICON: 'change-dead-icon',
+        LARGE_BLOODIED_ICON: 'large-bloodied-icon'
     }
 
     static TEMPLATES = {
