@@ -24,7 +24,7 @@ export async function setBloodiedDeadOnHPChange(actor, change, options, userId) 
                 await actor.deleteEmbeddedDocuments("ActiveEffect", findEffectIds(bloodied, actor))
             }
             else {
-                setIfNotPresent(bloodied, actor, game.settings.get(DnD4eTools.ID, DnD4eTools.SETTINGS.LARGE_BLOODIED_ICON))
+                await setIfNotPresent(bloodied, actor, game.settings.get(DnD4eTools.ID, DnD4eTools.SETTINGS.LARGE_BLOODIED_ICON))
             }
         }
 
@@ -32,33 +32,33 @@ export async function setBloodiedDeadOnHPChange(actor, change, options, userId) 
             if (newHP <= 0) {
                 if (actor.type === 'NPC') {
                     DnD4eTools.log(false, "NPC Dead!")
-                    setIfNotPresent(dead, actor)
-                    defeatInCombat(actor)
+                    await setIfNotPresent(dead, actor)
+                    await defeatInCombat(actor)
                 }
                 else {
                     if (newHP <= 0 - bloodiedHP) {
                         DnD4eTools.log(false, "PC Dead!")
                         await actor.deleteEmbeddedDocuments("ActiveEffect", findEffectIds(dying, actor))
-                        setIfNotPresent(dead, actor)
-                        defeatInCombat(actor)
+                        await setIfNotPresent(dead, actor)
+                        await defeatInCombat(actor)
                     }
                     else {
                         DnD4eTools.log(false, "PC Dying!")
                         await actor.deleteEmbeddedDocuments("ActiveEffect", findEffectIds(dead, actor))
-                        setIfNotPresent(dying, actor)
-                        defeatInCombat(actor, false)
+                        await setIfNotPresent(dying, actor)
+                        await defeatInCombat(actor, false)
                     }
                 }
             }
             else {
-                defeatInCombat(actor, false)
+                await defeatInCombat(actor, false)
                 const statusIds = (findEffectIds(dying, actor)).concat(findEffectIds(dead, actor))
                 await actor.deleteEmbeddedDocuments("ActiveEffect", statusIds)
             }
         }
     }
 
-    function defeatInCombat(actor, defeated = true) {
+    async function defeatInCombat(actor, defeated = true) {
         const activeCombat = game.combat
         // if we are not running a combat, stop now
         if (!activeCombat) { return }
@@ -80,10 +80,10 @@ export async function setBloodiedDeadOnHPChange(actor, change, options, userId) 
 
         if (!updates.length) { return }
         DnD4eTools.log(false, updates)
-        activeCombat.updateEmbeddedDocuments("Combatant", updates)
+        await activeCombat.updateEmbeddedDocuments("Combatant", updates)
     }
 
-    function setIfNotPresent(statusToCheck, actor, overlay = true) {
+    async function setIfNotPresent(statusToCheck, actor, overlay = true) {
         const existingEffect = actor.effects.find(x => x.statuses.has(statusToCheck))
         if (existingEffect) {
             DnD4eTools.log(false, `Actor already has ${statusToCheck}, not reapplying`)
@@ -106,7 +106,7 @@ export async function setBloodiedDeadOnHPChange(actor, change, options, userId) 
             }
         }
         delete effect.id
-        ActiveEffect.create(effect, { parent : actor })
+        await ActiveEffect.create(effect, { parent : actor })
     }
 
     function findEffectIds(statusToCheck, actor) {
