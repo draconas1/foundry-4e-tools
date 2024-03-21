@@ -44,26 +44,26 @@ function customGetter(sheet) {
         weapon: []
     }
 
-    Object.keys(game.dnd4eBeta.config.effectTypes).forEach((key) => keywords.power.push(key))
-    Object.keys(game.dnd4eBeta.config.powerSource).forEach((key) => keywords.power.push(key))
-    if (game.dnd4eBeta.config.toolKeys) {
-        Object.keys(game.dnd4eBeta.config.toolKeys).forEach((key) => keywords.power.push(key))
-        Object.keys(game.dnd4eBeta.config.rangeKeys).forEach((key) => keywords.power.push(key))
+    Object.keys(game.dnd4e.config.effectTypes).forEach((key) => keywords.power.push(key))
+    Object.keys(game.dnd4e.config.powerSource).forEach((key) => keywords.power.push(key))
+    if (game.dnd4e.config.toolKeys) {
+        Object.keys(game.dnd4e.config.toolKeys).forEach((key) => keywords.power.push(key))
+        Object.keys(game.dnd4e.config.rangeKeys).forEach((key) => keywords.power.push(key))
     }
 
-    Object.keys(game.dnd4eBeta.config.weaponGroup).forEach((key) => keywords.weapon.push(key))
-    Object.keys(game.dnd4eBeta.config.weaponProperties).forEach((key) => keywords.weapon.push(key))
+    Object.keys(game.dnd4e.config.weaponGroup).forEach((key) => keywords.weapon.push(key))
+    Object.keys(game.dnd4e.config.weaponProperties).forEach((key) => keywords.weapon.push(key))
 
     // old
-    if (game.dnd4eBeta.config.implementGroup) {
-        Object.keys(game.dnd4eBeta.config.implementGroup).forEach((key) => keywords.weapon.push(key))
+    if (game.dnd4e.config.implementGroup) {
+        Object.keys(game.dnd4e.config.implementGroup).forEach((key) => keywords.weapon.push(key))
     }
     // new
-    if (game.dnd4eBeta.config.implement) {
-        Object.keys(game.dnd4eBeta.config.implement).forEach((key) => keywords.weapon.push(key))
+    if (game.dnd4e.config.implement) {
+        Object.keys(game.dnd4e.config.implement).forEach((key) => keywords.weapon.push(key))
     }
 
-    Object.keys(game.dnd4eBeta.config.damageTypes).forEach((key) => {
+    Object.keys(game.dnd4e.config.damageTypes).forEach((key) => {
         keywords.power.push(key)
         keywords.weapon.push(key)
     })
