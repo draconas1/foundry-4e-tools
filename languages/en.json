@@ -61,5 +61,32 @@
         "doubleRun" : "Double Run"
       }
     }
+  },
+  "tokenActionHud": {
+    "dnd4e": {
+      "conditions" : "Conditions",
+      "effectTemporary" : "Temporary Effects",
+      "effectPassive" : "Passive Effects",
+      "rollInitiative" : "Roll Initiative",
+      "saves" : "Saving Throws",
+      "settings": {
+        "displayUnequipped": {
+          "hint": "Token Action Hud: Choose whether to display unequipped items on the HUD",
+          "name": "TAH: Display Unequipped"
+        },
+        "abbreviateSkills": {
+          "hint": "Token Action Hud: Skills and Abilities use only their shortened name to save space",
+          "name": "TAH: Abbreviate Skills"
+        },
+        "hideUsedPowers": {
+          "name": "TAH: Hide used powers",
+          "hint": "Token Action Hud: Powers that have already been used are hidden"
+        },
+        "forcePowerColours": {
+          "name": "TAH: Colour powers by type",
+          "hint": "Token Action Hud: Power buttons are coloured green/red/black/orange"
+        }
+      }
+    }
   }
 }
