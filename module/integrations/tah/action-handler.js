@@ -178,8 +178,8 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             if (allPowers.length === 0) return
 
             let groupType = this.actor.system.powerGroupTypes
-            if (!groupType) {
-                actor.system.powerGroupTypes = "usage"
+            if (!groupType && this.actor) {
+                this.actor.system.powerGroupTypes = "usage"
                 groupType = "usage"
             }
 
