@@ -16,7 +16,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         async handleActionClick (event, encodedValue) {
             const [actionTypeId, actionId] = encodedValue.split(this.delimiter)
 
-            const renderable = ['item']
+            const renderable = ['item', 'power']
 
             if (renderable.includes(actionTypeId) && this.isRenderItem()) {
                 return this.doRenderItem(this.actor, actionId)
@@ -111,7 +111,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             const item = actor.items.get(actionId)
 
             if (this.#needsRecharge(actor, item)) {
-                event.currentTarget = { closest : (str) => {return {dataset : { itemId : itemId}}} };
+                event.currentTarget = { closest : (_) => {return {dataset : { itemId : actionId}}} };
                 this.dnd4e.tokenBarHooks.rechargePower(actor, item, event)
                 return;
             }
@@ -128,6 +128,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          * @private
          * @param {object} token    The token
          * @param {string} actionId The action id
+         * @param {object} actor    The actor
          */
         async #handleUtilityAction (actor, token, actionId) {
             switch (actionId) {

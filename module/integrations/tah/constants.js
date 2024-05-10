@@ -71,7 +71,7 @@ export const ITEM_TYPE = {
     consumable: { id: 'container', name: 'TYPES.Item.backpack', type: 'system' },
     weapon: { id: 'weapon', name: 'TYPES.Item.weapon', type: 'system' },
     tool: { id: 'tool', name: 'TYPES.Item.tool', type: 'system' },
-    loot: { id: 'weapon', name: 'TYPES.Item.loot', type: 'system' },
+    loot: { id: 'loot', name: 'TYPES.Item.loot', type: 'system' },
 }
 
 /**
