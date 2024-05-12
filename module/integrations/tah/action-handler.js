@@ -1,6 +1,8 @@
 // System Module Imports
 import {FEATURES, ITEM_TYPE, VALID_ACTOR_TYPES} from './constants.js'
 import { Utils } from './utils.js'
+// TODO CODE SMELL
+import { Helper } from "../../../../../systems/dnd4e/module/helper.js"
 
 export let ActionHandler = null
 
@@ -408,6 +410,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             }
             const encodedValue = [actionType, id].join(this.delimiter)
             const img = coreModule.api.Utils.getImage(entity)
+            const tooltip = await this.#getTooltip(entity)
             /*
             Some good stuff here in dnd5e around tooltipping that we could make use of in a future version
 
@@ -418,9 +421,85 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 name,
                 encodedValue,
                 cssClass,
-                img
+                img,
+                tooltip
             }
         }
+
+        /**
+         * Get tooltip
+         * @param {object} tooltipData The tooltip data
+         * @returns {Promise}           The tooltip
+         */
+        async #getTooltip (tooltipData) {
+            if (this.tooltipsSetting === 'none') return ''
+            if (typeof tooltipData === 'string') return tooltipData
+
+            const name = coreModule.api.Utils.i18n(tooltipData.name)
+
+            if (this.tooltipsSetting === 'nameOnly') return name
+
+
+            if (!this.actor) return ''
+            if (!tooltipData.type) return ''
+
+            const cardData = await ( async () => {
+                if ((tooltipData.type === "power" || tooltipData.type === "consumable") && tooltipData.system.autoGenChatPowerCard) {
+                    let weaponUse = Helper.getWeaponUse(tooltipData.system, this.actor);
+                    let attackBonus = null;
+                    if(this.hasAttack){
+                        attackBonus = await tooltipData.getAttackBonus();
+                    }
+                    let cardString = Helper._preparePowerCardData(await tooltipData.getChatData(), CONFIG, this.actor, attackBonus);
+                    return Helper.commonReplace(cardString, this.actor, tooltipData, weaponUse? weaponUse.system : null, 1);
+                } else {
+                    return null;
+                }
+            })();
+
+            // Basic template rendering data
+            const token = this.actor.token;
+            const templateData = {
+                actor: this.actor,
+                tokenId: token ? token.uuid : null,
+                effects: null,
+                item: tooltipData,
+                system: await tooltipData.getChatData(),
+                labels: tooltipData.labels,
+                hasAttack: tooltipData.hasAttack,
+                isHealing: tooltipData.isHealing,
+                isPower: tooltipData.type === "power",
+                hasDamage: tooltipData.hasDamage,
+                hasHealing: tooltipData.hasHealing,
+                hasEffect: tooltipData.hasEffect,
+                cardData,
+                isVersatile: tooltipData.isVersatile,
+                hasSave: tooltipData.hasSave,
+                hasAreaTarget: tooltipData.hasAreaTarget,
+                isRoll: false,
+            };
+
+            // Render the chat card template
+            let templateType = "item"
+            if (["tool", "ritual"].includes(tooltipData.type)) {
+                templateType =  tooltipData.type
+                //templateData.abilityCheck = Helper.byString(tooltipData.system.attribute.replace(".mod",".label").replace(".total",".label"), this.actor.system);
+            }
+            const template = `systems/dnd4e/templates/chat/${templateType}-card.html`;
+            let html = await renderTemplate(template, templateData);
+
+            if(["power", "consumable"].includes(templateData.item.type)) {
+                html = html.replace("ability-usage--", `ability-usage--${templateData.system.useType}`);
+            }
+            else if (["weapon", "equipment", "backpack", "tool", "loot"].includes(templateData.item.type)) {
+                html = html.replace("ability-usage--", `ability-usage--item`);
+            } else {
+                html = html.replace("ability-usage--", `ability-usage--other`);
+            }
+
+            return `<div class="chat-message">${html}</div>`
+        }
+
 
         /**
          * Build the utility buttons
