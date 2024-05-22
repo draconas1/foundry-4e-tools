@@ -1,7 +1,7 @@
 // System Module Imports
 import {FEATURES, ITEM_TYPE, VALID_ACTOR_TYPES} from './constants.js'
 import { Utils } from './utils.js'
-// TODO CODE SMELL
+// TODO CODE SMELL.  Remove with V2 removal.
 import { Helper } from "../../../../../systems/dnd4e/module/helper.js"
 
 export let ActionHandler = null
@@ -13,6 +13,8 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
     ActionHandler = class ActionHandler extends coreModule.api.ActionHandler {
         dnd4e = game.dnd4e
         i18n = (str) => coreModule.api.Utils.i18n(str)
+        version = this.dnd4e.tokenBarHooks.version
+
         
         /**
          * Build system actions
@@ -133,7 +135,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          */
         #buildSkills() {
             // Get abilities
-            const skills = (!this.actor) ?this.dnd4e.config.skills : this.actor.system.skills
+            const skills = (!this.actor) ? this.dnd4e.config.skills : this.actor.system.skills
 
             // Exit if no abilities exist
             if (skills.length === 0) return
@@ -174,7 +176,47 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             return icons[level];
         }
 
+
         async #buildPowers() {
+            if (this.version >= 3) {
+                return this.#buildPowersV3()
+            }
+            else return this.#buildPowersV2()
+        }
+
+        async #buildPowersV3() {
+            const actionType = "power"
+            const groupings = this.dnd4e.tokenBarHooks.powersBySheetGroup(this.actor)
+
+            Object.entries(groupings).map(async (e) => {
+                const groupId = e[0]+"Power"
+                const groupData = {id: groupId, type: 'system'}
+                let powerList = e[1].items
+                if (this.hideUsed) {
+                    powerList = powerList.filter((power) => {
+                        return power.system.useType === "recharge" || this.dnd4e.tokenBarHooks.isPowerAvailable(this.actor, power)
+                    })
+                }
+                else {
+                    // need to poke this to force the available boolean correctly for recharge powers
+                    powerList.forEach((power) => {
+                        this.dnd4e.tokenBarHooks.isPowerAvailable(this.actor, power)
+                    })
+                }
+
+                const actions = await Promise.all(powerList
+                    .map(async (power) => {
+                        const action = await this.#buildActionFromItem(actionType, power)
+                        if (this.powerColours) {
+                            action.cssClass = `force-ability-usage--${power.system.useType}`
+                        }
+                        return action
+                    }))
+                this.addActions(actions, groupData)
+            });
+        }
+
+        async #buildPowersV2() {
             const allPowers = this.actor.items.filter((item) => item.type === "power")
             const actionType = "power"
             if (allPowers.length === 0) return
@@ -241,8 +283,13 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          * @private
          */
         async #buildInventory () {
+            // TODO: API V2 Removal
+            let inventoryTypes = ITEM_TYPE;
+            if (this.version >= 3) {
+                inventoryTypes = this.dnd4e.config.inventoryTypes
+            }
             const filter = ((itemData) => itemData.system.equipped || this.displayUnequipped)
-            return this.#buildBasicGroupsOfActionsByType(ITEM_TYPE, 'item', filter)
+            return this.#buildBasicGroupsOfActionsByType(inventoryTypes, 'item', filter)
         }
 
         /**
@@ -250,7 +297,13 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          * @private
          */
         async #buildFeatures() {
-            return this.#buildBasicGroupsOfActionsByType(FEATURES, 'item')
+            // TODO: API V2 Removal
+            let featureTypes = FEATURES;
+            if (this.version >= 3) {
+                featureTypes = this.dnd4e.config.featureTypes
+            }
+
+            return this.#buildBasicGroupsOfActionsByType(featureTypes, 'item', undefined)
         }
 
         /**
@@ -426,12 +479,41 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             }
         }
 
+        async #getTooltip (tooltipData) {
+            if (this.version >= 3) {
+                return this.#getTooltipV3(tooltipData)
+            }
+            else return this.#getTooltipV2(tooltipData)
+        }
+
         /**
          * Get tooltip
          * @param {object} tooltipData The tooltip data
          * @returns {Promise}           The tooltip
          */
-        async #getTooltip (tooltipData) {
+        async #getTooltipV3 (tooltipData) {
+            if (this.tooltipsSetting === 'none') return ''
+            if (typeof tooltipData === 'string') return tooltipData
+
+            const name = coreModule.api.Utils.i18n(tooltipData.name)
+
+            if (this.tooltipsSetting === 'nameOnly') return name
+
+
+            if (!this.actor) return ''
+            if (!tooltipData.type) return ''
+
+            const html = await this.dnd4e.tokenBarHooks.generateItemTooltip(this.actor, tooltipData)
+            //<div class="message-content"><div class="item-card chat-card power-card"><div class="card-content"></div></div></div></div>`
+            return `<div class="dnd4e"><div class="chat-message">${html}</div></div>`
+        }
+
+        /**
+         * Get tooltip
+         * @param {object} tooltipData The tooltip data
+         * @returns {Promise}           The tooltip
+         */
+        async #getTooltipV2 (tooltipData) {
             if (this.tooltipsSetting === 'none') return ''
             if (typeof tooltipData === 'string') return tooltipData
 
