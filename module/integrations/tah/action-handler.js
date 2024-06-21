@@ -188,7 +188,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             const actionType = "power"
             const groupings = this.dnd4e.tokenBarHooks.powersBySheetGroup(this.actor)
 
-            Object.entries(groupings).map(async (e) => {
+            const groupDataFutures = Object.entries(groupings).map(async (e) => {
                 const groupId = e[0]+"Power"
                 const groupData = {id: groupId, type: 'system'}
                 let powerList = e[1].items
@@ -204,16 +204,22 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                     })
                 }
 
-                const actions = await Promise.all(powerList
-                    .map(async (power) => {
-                        const action = await this.#buildActionFromItem(actionType, power)
-                        if (this.powerColours) {
-                            action.cssClass = `force-ability-usage--${power.system.useType}`
-                        }
-                        return action
-                    }))
-                this.addActions(actions, groupData)
+                const actionFutures = powerList.map(async (power) => {
+                    const action = await this.#buildActionFromItem(actionType, power)
+                    if (this.powerColours) {
+                        action.cssClass = `force-ability-usage--${power.system.useType}`
+                    }
+                    return action
+                })
+
+                const actions = await Promise.all(actionFutures)
+                return {
+                    groupData,
+                    actions
+                }
             });
+            const groupInfo = await Promise.all(groupDataFutures)
+            groupInfo.forEach(gi => this.addActions(gi.actions, gi.groupData))
         }
 
         async #buildPowersV2() {
@@ -504,8 +510,14 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             if (!tooltipData.type) return ''
 
             const html = await this.dnd4e.tokenBarHooks.generateItemTooltip(this.actor, tooltipData)
-            //<div class="message-content"><div class="item-card chat-card power-card"><div class="card-content"></div></div></div></div>`
-            return `<div class="dnd4e"><div class="chat-message">${html}</div></div>`
+            const finalhtml = this.#buildHorribleNestedDiv(html, ["tah-4etooltip"])
+            return finalhtml
+        }
+
+        #buildHorribleNestedDiv(html, divClasses) {
+            const divHeads = divClasses.map(d => `<div class="${d}">`).join()
+            const divTails = divClasses.map(_ => `</div>`).join()
+            return `${divHeads}${html}${divTails}`
         }
 
         /**
