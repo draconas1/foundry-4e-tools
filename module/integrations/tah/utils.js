@@ -18,7 +18,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             try {
                 value = game.settings.get(MODULE.ID, key)
             } catch {
-                coreModule.api.Logger.debug(`Setting '${key}' not found`)
+               // coreModule.api.Logger.debug(`Setting '${key}' not found`)
             }
             return value
         }
@@ -31,9 +31,9 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
         static async setSetting (key, value) {
             try {
                 value = await game.settings.set(MODULE.ID, key, value)
-                coreModule.api.Logger.debug(`Setting '${key}' set to '${value}'`)
+               // coreModule.api.Logger.debug(`Setting '${key}' set to '${value}'`)
             } catch {
-                coreModule.api.Logger.debug(`Setting '${key}' not found`)
+               // coreModule.api.Logger.debug(`Setting '${key}' not found`)
             }
         }
     }
