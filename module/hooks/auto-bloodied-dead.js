@@ -21,9 +21,9 @@ export async function setBloodiedDeadOnHPChange(actor, change, options, userId) 
 
         if (game.settings.get(DnD4eTools.ID, DnD4eTools.SETTINGS.BLOODIED_ICON)) {
             if(newHP > bloodiedHP) {
-                await actor.deleteEmbeddedDocuments("ActiveEffect", findEffectIds(bloodied, actor))
+                await deleteIfPresent(bloodied, actor)
             }
-            else {
+            else if (newHP > 0) {
                 await setIfNotPresent(bloodied, actor, game.settings.get(DnD4eTools.ID, DnD4eTools.SETTINGS.LARGE_BLOODIED_ICON))
             }
         }
@@ -32,19 +32,23 @@ export async function setBloodiedDeadOnHPChange(actor, change, options, userId) 
             if (newHP <= 0) {
                 if (actor.type === 'NPC') {
                     DnD4eTools.log(false, "NPC Dead!")
+                    await deleteIfPresent(bloodied, actor)
                     await setIfNotPresent(dead, actor)
                     await defeatInCombat(actor)
                 }
                 else {
                     if (newHP <= 0 - bloodiedHP) {
                         DnD4eTools.log(false, "PC Dead!")
-                        await actor.deleteEmbeddedDocuments("ActiveEffect", findEffectIds(dying, actor))
+                        await deleteIfPresent(bloodied, actor)
+                        await deleteIfPresent(dying, actor)
+
                         await setIfNotPresent(dead, actor)
                         await defeatInCombat(actor)
                     }
                     else {
                         DnD4eTools.log(false, "PC Dying!")
-                        await actor.deleteEmbeddedDocuments("ActiveEffect", findEffectIds(dead, actor))
+                        await deleteIfPresent(bloodied, actor)
+                        await deleteIfPresent(dead, actor)
                         await setIfNotPresent(dying, actor)
                         await defeatInCombat(actor, false)
                     }
@@ -97,7 +101,7 @@ export async function setBloodiedDeadOnHPChange(actor, change, options, userId) 
 
         const effect = {
             ...status,
-            "label" : game.i18n.localize(status.label),
+            "name" : game.i18n.localize(status.label),
             "statuses" : [statusToCheck],
             "flags": {
                 "core": {
@@ -111,5 +115,9 @@ export async function setBloodiedDeadOnHPChange(actor, change, options, userId) 
 
     function findEffectIds(statusToCheck, actor) {
         return actor.effects.filter(effect => effect.statuses.has(statusToCheck)).map(effect => effect.id)
+    }
+
+    async function deleteIfPresent(statusToCheck, actor) {
+        return actor.deleteEmbeddedDocuments("ActiveEffect", findEffectIds(statusToCheck, actor))
     }
 }
