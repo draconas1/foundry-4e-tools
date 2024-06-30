@@ -26,7 +26,7 @@ async function updateMonsterKnowledge(actor) {
             const details = actor.system.details
             const description = knowledge.system.description.value;
             let lines = description.split("\n")
-            const config = game.dnd4eBeta.config
+            const config = game.dnd4e.config
             // try to get the old name out of the power effects.  This is an imperfect science.
             const oldName = lines[0].replace('<h1>', '').replace('</h1>', '')
             lines = lines.map(x => x.replaceAll(oldName, actor.name).replaceAll(oldName.toLowerCase(), actor.name.toLowerCase()))
