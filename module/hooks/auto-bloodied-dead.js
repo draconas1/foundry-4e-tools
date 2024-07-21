@@ -3,6 +3,7 @@ import DnD4eTools from "../4e-tools.js";
 const dead = "dead"
 const dying = "dying"
 const bloodied = "bloodied"
+const prone = "prone"
 
 export async function setBloodiedDeadOnHPChange(actor, change, options, userId) {
     // only fire this for the user that changed the hp in the first place
@@ -34,6 +35,7 @@ export async function setBloodiedDeadOnHPChange(actor, change, options, userId) 
                     DnD4eTools.log(false, "NPC Dead!")
                     await deleteIfPresent(bloodied, actor)
                     await setIfNotPresent(dead, actor)
+                    await setIfNotPresent(prone, actor,  false)
                     await defeatInCombat(actor)
                 }
                 else {
@@ -42,14 +44,19 @@ export async function setBloodiedDeadOnHPChange(actor, change, options, userId) 
                         await deleteIfPresent(bloodied, actor)
                         await deleteIfPresent(dying, actor)
 
+                        await setIfNotPresent(prone, actor,  false)
                         await setIfNotPresent(dead, actor)
+
                         await defeatInCombat(actor)
                     }
                     else {
                         DnD4eTools.log(false, "PC Dying!")
                         await deleteIfPresent(bloodied, actor)
                         await deleteIfPresent(dead, actor)
+
                         await setIfNotPresent(dying, actor)
+                        await setIfNotPresent(prone, actor,  false)
+
                         await defeatInCombat(actor, false)
                     }
                 }
