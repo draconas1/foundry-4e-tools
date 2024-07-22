@@ -11,6 +11,12 @@ export async function setBloodiedDeadOnHPChange(actor, change, options, userId) 
     // only fire if the HP changed
     if(change.system?.attributes?.hp?.hasOwnProperty('value')) {
         DnD4eTools.log(false, "Firing bloodied update for " + game.users.get(userId).name)
+
+        if (actor.flags.dracsTools?.autoBloodied?.ignore) {
+            DnD4eTools.log(false, "Actor has auto-bloodied ignored")
+            return;
+        }
+
         const newHP = change.system.attributes.hp.value
         const maxHP = actor.system.attributes.hp.max
         if (!maxHP) {
@@ -31,7 +37,8 @@ export async function setBloodiedDeadOnHPChange(actor, change, options, userId) 
 
         if (game.settings.get(DnD4eTools.ID, DnD4eTools.SETTINGS.DEAD_ICON)) {
             if (newHP <= 0) {
-                if (actor.type === 'NPC') {
+                let treatlikePC = actor.flags.dracsTools?.autoBloodied?.npcDiesLikePC
+                if (actor.type === 'NPC' && !treatlikePC) {
                     DnD4eTools.log(false, "NPC Dead!")
                     await deleteIfPresent(bloodied, actor)
                     await setIfNotPresent(dead, actor)
