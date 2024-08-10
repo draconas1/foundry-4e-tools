@@ -111,20 +111,7 @@ export async function setBloodiedDeadOnHPChange(actor, change, options, userId) 
             DnD4eTools.log(false, `Actor does not have status ${statusToCheck}.  Applying it`)
         }
 
-        const status = CONFIG.statusEffects.find(x => x.id === statusToCheck)
-
-        const effect = {
-            ...status,
-            "name" : game.i18n.localize(status.label),
-            "statuses" : [statusToCheck],
-            "flags": {
-                "core": {
-                    "overlay": overlay
-                }
-            }
-        }
-        delete effect.id
-        await ActiveEffect.create(effect, { parent : actor })
+        await actor.toggleStatusEffect(statusToCheck, { active: true, overlay: overlay })
     }
 
     function findEffectIds(statusToCheck, actor) {

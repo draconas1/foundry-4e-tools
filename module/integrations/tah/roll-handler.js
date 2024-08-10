@@ -200,8 +200,8 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                 if (effect?.disabled) { await effect.delete() }
 
                 isRightClick
-                    ? await token.toggleEffect(condition, { overlay: true })
-                    : await token.toggleEffect(condition)
+                    ? await actor.toggleStatusEffect(actionId, { overlay: true })
+                    : await actor.toggleStatusEffect(actionId)
             }
 
             Hooks.callAll('forceUpdateTokenActionHud')

@@ -178,10 +178,16 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
 
 
         async #buildPowers() {
-            if (this.version >= 3) {
-                return this.#buildPowersV3()
+            try {
+                if (this.version >= 3) {
+                    return this.#buildPowersV3()
+                }
+                else return this.#buildPowersV2()
             }
-            else return this.#buildPowersV2()
+            catch (e) {
+                this.#logError(e, null)
+            }
+
         }
 
         async #buildPowersV3() {
@@ -320,29 +326,34 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          * @private
          */
         async #buildBasicGroupsOfActionsByType(itemTypeLookup, actionTypeId, optFilter) {
-            const mapByItemType = new Map()
-            const filter = optFilter ?? ((itemData) => true)
+            try {
+                const mapByItemType = new Map()
+                const filter = optFilter ?? ((itemData) => true)
 
 
-            for (const itemData of this.actor.items) {
-                const type = itemData.type
-                if (itemTypeLookup[type] && filter(itemData)) {
-                    const typeMap = mapByItemType.get(type) ?? new Map()
-                    typeMap.set(itemData.id, itemData)
-                    mapByItemType.set(type, typeMap)
+                for (const itemData of this.actor.items) {
+                    const type = itemData.type
+                    if (itemTypeLookup[type] && filter(itemData)) {
+                        const typeMap = mapByItemType.get(type) ?? new Map()
+                        typeMap.set(itemData.id, itemData)
+                        mapByItemType.set(type, typeMap)
+                    }
+                }
+
+                for (const [type, typeMap] of mapByItemType) {
+                    const groupId = type
+                    const groupData = {id: groupId, type: 'system'}
+
+                    // Get actions
+                    const actions =  await Promise.all([...typeMap].map(
+                        async ([itemId, itemData]) => this.#buildActionFromItem(actionTypeId, itemData))
+                    )
+
+                    this.addActions(actions, groupData)
                 }
             }
-
-            for (const [type, typeMap] of mapByItemType) {
-                const groupId = type
-                const groupData = {id: groupId, type: 'system'}
-
-                // Get actions
-                const actions =  await Promise.all([...typeMap].map(
-                    async ([itemId, itemData]) => this.#buildActionFromItem(actionTypeId, itemData))
-                )
-
-                this.addActions(actions, groupData)
+            catch (e) {
+                this.#logError(e, null)
             }
         }
 
@@ -374,12 +385,14 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
                     : ''
                 const cssClass = `toggle${active}`
                 const img = coreModule.api.Utils.getImage(condition)
+                const tooltip = await this.#getTooltip(this.i18n(condition.description))
                 return {
                     id,
                     name,
                     encodedValue,
                     img,
-                    cssClass
+                    cssClass,
+                    tooltip
                 }
             }))
 
@@ -470,11 +483,6 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
             const encodedValue = [actionType, id].join(this.delimiter)
             const img = coreModule.api.Utils.getImage(entity)
             const tooltip = await this.#getTooltip(entity)
-            /*
-            Some good stuff here in dnd5e around tooltipping that we could make use of in a future version
-
-            Keeping the async keyword in because of future tooltips.
-             */
             return {
                 id,
                 name,
@@ -498,6 +506,7 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
          * @returns {Promise}           The tooltip
          */
         async #getTooltipV3 (tooltipData) {
+            if (!tooltipData) return ''
             if (this.tooltipsSetting === 'none') return ''
             if (typeof tooltipData === 'string') return tooltipData
 
@@ -505,19 +514,39 @@ Hooks.once('tokenActionHudCoreApiReady', async (coreModule) => {
 
             if (this.tooltipsSetting === 'nameOnly') return name
 
-
             if (!this.actor) return ''
             if (!tooltipData.type) return ''
 
-            const html = await this.dnd4e.tokenBarHooks.generateItemTooltip(this.actor, tooltipData)
-            const finalhtml = this.#buildHorribleNestedDiv(html, ["tah-4etooltip"])
-            return finalhtml
+            if (typeof tooltipData.getChatData == 'function') {
+                try {
+                    const html = await this.dnd4e.tokenBarHooks.generateItemTooltip(this.actor, tooltipData)
+                    const finalhtml = this.#buildHorribleNestedDiv(html, ["tah-4etooltip"])
+                    return finalhtml
+                }
+                catch (e) {
+                    this.#logError(e, tooltipData)
+                    return ''
+                }
+            }
+            else if (tooltipData.description) {
+                return this.#buildHorribleNestedDiv(tooltipData.description, ["tah-4etooltip"])
+            }
+            else {
+                return ''
+            }
         }
 
         #buildHorribleNestedDiv(html, divClasses) {
             const divHeads = divClasses.map(d => `<div class="${d}">`).join()
             const divTails = divClasses.map(_ => `</div>`).join()
             return `${divHeads}${html}${divTails}`
+        }
+
+        #logError(error, context) {
+            coreModule.api.Logger.error(error)
+            if (context) {
+                coreModule.api.Logger.error(JSON.stringify(context))
+            }
         }
 
         /**
