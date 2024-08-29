@@ -63,10 +63,10 @@ export default class DnD4eTools {
     static setDeadIcon() {
         const deadStatus = CONFIG.statusEffects.find(x => x.id === "dead");
         if (game.settings.get(DnD4eTools.ID, DnD4eTools.SETTINGS.CHANGE_DEAD_ICON)) {
-            deadStatus.icon = DnD4eTools.FLAGS.MODDED_DEAD_STATUS_ICON
+            deadStatus.img = DnD4eTools.FLAGS.MODDED_DEAD_STATUS_ICON
         }
         else {
-            deadStatus.icon = DnD4eTools.FLAGS.ORIGINAL_DEAD_STATUS_ICON
+            deadStatus.img = DnD4eTools.FLAGS.ORIGINAL_DEAD_STATUS_ICON
         }
     }
 
