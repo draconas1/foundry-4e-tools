@@ -8,6 +8,8 @@ This requires the D&D 4E setting: https://github.com/EndlesNights/dnd4eBeta
 * **Foundry VTT Compatibility**: 12.0+
 * **DnD4E system compatibility**: 0.5.1+
 
+**Token Action Hud Core integration for 4E has moved!** Go here: https://github.com/draconas1/token-action-hud-dnd4e
+
 ## Installation
 * Open the Foundry application and click **"Install Module"** in the **"Addon Modules"** tab.
 * Search for **"Drac"** and you will see **"Dracs 4E tools for Foundry VTT"**.  
