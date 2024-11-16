@@ -5,7 +5,7 @@ export function addActorContextMenuUpdateMonsterKnowledge(html, entryOptions) {
         condition: target => {
             const id = target.attr('data-document-id')
             const actor = game.actors.get(id);
-            return actor?.type === 'NPC'
+            return actor?.type === 'NPC' && actor?.flags?.masterplan?.imported
         },
         icon: '<i class="fas fa-book"></i>',
         callback: target => {
