@@ -24,6 +24,13 @@ Hooks.once("dragRuler.ready", registerSpeedProvider);
 Hooks.on("aipSetup", registerAutoCompletePackage);
 Hooks.on("getActorDirectoryEntryContext", addActorContextMenuUpdateMonsterKnowledge);
 
+Hooks.once('tokenActionHudCoreApiReady', async () => {
+    const module = game.modules.get('token-action-hud-dnd4e')
+    if (!module?.active) {
+        ui.notifications.error("TOKEN ACTION HUD: 4e Integration has moved to https://github.com/draconas1/token-action-hud-dnd4e (logged to console for C&P)");
+        console.log("TOKEN ACTION HUD: 4e Integration has moved to https://github.com/draconas1/token-action-hud-dnd4e")
+    }
+})
 
 export default class DnD4eTools {
     static ID = 'foundry-4e-tools';

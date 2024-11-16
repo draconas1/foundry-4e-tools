@@ -1,23 +1,22 @@
 {
   "TOOLS4E" : {
-
-    "buttons" : {
-      "importer-launch-button" : "Import Monsters from Masterplan"
+    "buttons": {
+      "importer-launch-button": "Import Monsters from Masterplan"
     },
-    "context" : {
-      "update-monster-knowledge" : "Masterplan Monster: Update Basic Monster Knowledge"
+    "context": {
+      "update-monster-knowledge": "Masterplan Monster: Update Basic Monster Knowledge"
     },
-    "import-json-screen" : {
-      "title" : "Import JSON from Masterplan",
-      "label" : "Paste the Foundry JSON you exported from Masterplan below and click import",
-      "placeholder" : "Foundry format JSON",
-      "import-button" : "Import creatures into Foundry",
-      "create-in-encounter-folders" : "Import creatures into folders based on encounter",
-      "no-duplicate-checking" : "Do not check if creatures already exist",
-      "do-not-import-duplicates" : "Do not import creatures that already exist (globally)",
-      "do-not-import-duplicates-in-folder" : "Do not import creatures that already exist in the same folder",
-      "update-actors" : "In the case of finding a duplicate (if checking), update that monsters stats and powers (Will erase all existing powers and features)",
-      "update-knowledge-button" : "After import, if you change the basic NPC data (name, type, origin) there is a context menu option in the actor list to update that in the 'Monster Knowledge' features"
+    "import-json-screen": {
+      "title": "Import JSON from Masterplan",
+      "label": "Paste the Foundry JSON you exported from Masterplan below and click import",
+      "placeholder": "Foundry format JSON",
+      "import-button": "Import creatures into Foundry",
+      "create-in-encounter-folders": "Import creatures into folders based on encounter",
+      "no-duplicate-checking": "Do not check if creatures already exist",
+      "do-not-import-duplicates": "Do not import creatures that already exist (globally)",
+      "do-not-import-duplicates-in-folder": "Do not import creatures that already exist in the same folder",
+      "update-actors": "In the case of finding a duplicate (if checking), update that monsters stats and powers (Will erase all existing powers and features)",
+      "update-knowledge-button": "After import, if you change the basic NPC data (name, type, origin) there is a context menu option in the actor list to update that in the 'Monster Knowledge' features"
     },
     "settings": {
       "create-in-encounter-folders": {
@@ -55,37 +54,10 @@
     },
     "dragRuler4ESpeedProvider": {
       "speeds": {
-        "walk" : "Walk",
-        "run" : "Run",
-        "doubleWalk" : "Double Walk",
-        "doubleRun" : "Double Run"
-      }
-    }
-  },
-  "tokenActionHud": {
-    "dnd4e": {
-      "conditions" : "Conditions",
-      "effectTemporary" : "Temporary Effects",
-      "effectPassive" : "Passive Effects",
-      "rollInitiative" : "Roll Initiative",
-      "saves" : "Saving Throws",
-      "settings": {
-        "displayUnequipped": {
-          "hint": "Token Action Hud: Choose whether to display unequipped items on the HUD",
-          "name": "TAH: Display Unequipped"
-        },
-        "abbreviateSkills": {
-          "hint": "Token Action Hud: Skills and Abilities use only their shortened name to save space",
-          "name": "TAH: Abbreviate Skills"
-        },
-        "hideUsedPowers": {
-          "name": "TAH: Hide used powers",
-          "hint": "Token Action Hud: Powers that have already been used are hidden"
-        },
-        "forcePowerColours": {
-          "name": "TAH: Colour powers by type",
-          "hint": "Token Action Hud: Power buttons are coloured green/red/black/orange"
-        }
+        "walk": "Walk",
+        "run": "Run",
+        "doubleWalk": "Double Walk",
+        "doubleRun": "Double Run"
       }
     }
   }

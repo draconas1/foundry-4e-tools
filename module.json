@@ -20,11 +20,7 @@
   "readme": "https://github.com/draconas1/foundry-4e-tools/blob/main/README.md",
   "bugs": "https://github.com/draconas1/foundry-4e-tools/issues",
   "esmodules": [
-    "module/4e-tools.js",
-    "module/integrations/tah/init.js"
-  ],
-  "styles": [
-    "styles/tah-dnd4e-style.css"
+    "module/4e-tools.js"
   ],
   "languages": [
     {
