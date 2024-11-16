@@ -11,7 +11,7 @@
   "version": "4.2.2",
   "compatibility": {
     "minimum": "12.238",
-    "verified": "12.238"
+    "verified": "12.331"
   },
   "url": "https://github.com/draconas1/foundry-4e-tools",
   "manifest": "https://github.com/draconas1/foundry-4e-tools/releases/latest/download/module.json",
