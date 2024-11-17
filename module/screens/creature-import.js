@@ -114,7 +114,7 @@ export default class CreatureImporterScreen extends FormApplication {
                             "type" : "NPC",
                             "system" : creature.Data,
                             "folder" : folderId,
-                            "token" : creature.Token,
+                            "prototypeToken" : creature.Token,
                             "flags" : flags
                         }
                         if (img) {
