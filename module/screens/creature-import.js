@@ -136,7 +136,9 @@ export default class CreatureImporterScreen extends FormApplication {
                         // also to get the token size to update properly
                         actor.update({
                             "system.advancedCals" : true,
-                            "system.details.size" : creature.Data.details.size
+                            "system.details.size" : creature.Data.details.size,
+                            "system.powerGroupTypes" : "action",
+                            "system.powerSortTypes" : "useType"
                         }, { forceSizeUpdate: true})
                     }
 
