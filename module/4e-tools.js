@@ -37,7 +37,7 @@ export default class DnD4eTools {
     static NAME = '4e-tools';
 
     static FLAGS = {
-        ORIGINAL_DEAD_STATUS_ICON: '',
+        ORIGINAL_DEAD_STATUS_ICON: 'icons/svg/skull.svg',
         MODDED_DEAD_STATUS_ICON: "modules/foundry-4e-tools/icons/dead.svg"
     }
 
@@ -73,7 +73,10 @@ export default class DnD4eTools {
             deadStatus.img = DnD4eTools.FLAGS.MODDED_DEAD_STATUS_ICON
         }
         else {
-            deadStatus.img = DnD4eTools.FLAGS.ORIGINAL_DEAD_STATUS_ICON
+            if (deadStatus.img === DnD4eTools.FLAGS.MODDED_DEAD_STATUS_ICON) {
+                deadStatus.img = DnD4eTools.FLAGS.ORIGINAL_DEAD_STATUS_ICON
+            }
+            // if not don't touch it.
         }
     }
 
