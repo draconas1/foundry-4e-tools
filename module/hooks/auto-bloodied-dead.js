@@ -119,6 +119,8 @@ export async function setBloodiedDeadOnHPChange(actor, change, options, userId) 
     }
 
     async function deleteIfPresent(statusToCheck, actor) {
-        return actor.deleteEmbeddedDocuments("ActiveEffect", findEffectIds(statusToCheck, actor))
+        if (actor.statuses.has(statusToCheck) {
+            await actor.toggleStatusEffect(statusToCheck, { active: false })
+        }
     }
 }
