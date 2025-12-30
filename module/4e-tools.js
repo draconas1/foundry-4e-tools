@@ -38,7 +38,9 @@ export default class DnD4eTools {
 
     static FLAGS = {
         ORIGINAL_DEAD_STATUS_ICON: 'icons/svg/skull.svg',
-        MODDED_DEAD_STATUS_ICON: "modules/foundry-4e-tools/icons/dead.svg"
+        MODDED_DEAD_STATUS_ICON: "modules/foundry-4e-tools/icons/dead.svg",
+        ORIGINAL_DYING_STATUS_ICON: 'systems/dnd4e/icons/statusEffects/dying.svg',
+        MODDED_DYING_STATUS_ICON: "modules/foundry-4e-tools/icons/dying.svg"
     }
 
     static SETTINGS = {
@@ -75,6 +77,17 @@ export default class DnD4eTools {
         else {
             if (deadStatus.img === DnD4eTools.FLAGS.MODDED_DEAD_STATUS_ICON) {
                 deadStatus.img = DnD4eTools.FLAGS.ORIGINAL_DEAD_STATUS_ICON
+            }
+            // if not don't touch it.
+        }
+
+        const dyingStatus = CONFIG.statusEffects.find(x => x.id === "dying");
+        if (game.settings.get(DnD4eTools.ID, DnD4eTools.SETTINGS.CHANGE_DEAD_ICON)) {
+            dyingStatus.img = DnD4eTools.FLAGS.MODDED_DYING_STATUS_ICON
+        }
+        else {
+            if (dyingStatus.img === DnD4eTools.FLAGS.MODDED_DYING_STATUS_ICON) {
+                dyingStatus.img = DnD4eTools.FLAGS.ORIGINAL_DYING_STATUS_ICON
             }
             // if not don't touch it.
         }

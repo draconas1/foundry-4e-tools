@@ -44,8 +44,8 @@
         "Hint": "Tint the token red automatically when a creature is bloodied."
       },
       "change-dead-icon": {
-        "Name": "Change Dead Status Icon",
-        "Hint": "Changes the Dead Status icon to be a red skull and crossbones which I found more obvious than the default"
+        "Name": "Change Status Icons",
+        "Hint": "Changes the Dead and Dying Status icons to be more obvious when overlaid on a character"
       },
       "large-bloodied-icon": {
         "Name": "Auto Bloodied Status will be Large",

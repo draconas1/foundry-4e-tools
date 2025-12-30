@@ -4,6 +4,7 @@ const dead = "dead"
 const dying = "dying"
 const bloodied = "bloodied"
 const prone = "prone"
+const unconscious = "unconscious"
 
 export async function setBloodiedDeadOnHPChange(actor, change, options, userId) {
     // only fire this for the user that changed the hp in the first place
@@ -50,6 +51,7 @@ export async function setBloodiedDeadOnHPChange(actor, change, options, userId) 
                         DnD4eTools.log(false, "PC Dead!")
                         await deleteIfPresent(bloodied, actor)
                         await deleteIfPresent(dying, actor)
+                        await deleteIfPresent(unconscious, actor)
 
                         await setIfNotPresent(prone, actor,  false)
                         await setIfNotPresent(dead, actor)
@@ -63,6 +65,7 @@ export async function setBloodiedDeadOnHPChange(actor, change, options, userId) 
 
                         await setIfNotPresent(dying, actor)
                         await setIfNotPresent(prone, actor,  false)
+                        await setIfNotPresent(unconscious, actor,  false)
 
                         await defeatInCombat(actor, false)
                     }
@@ -70,7 +73,7 @@ export async function setBloodiedDeadOnHPChange(actor, change, options, userId) 
             }
             else {
                 await defeatInCombat(actor, false)
-                const statusIds = (findEffectIds(dying, actor)).concat(findEffectIds(dead, actor))
+                const statusIds = (findEffectIds(dying, actor)).concat(findEffectIds(dead, actor)).concat(findEffectIds(unconscious, actor))
                 await actor.deleteEmbeddedDocuments("ActiveEffect", statusIds)
             }
         }
@@ -119,7 +122,7 @@ export async function setBloodiedDeadOnHPChange(actor, change, options, userId) 
     }
 
     async function deleteIfPresent(statusToCheck, actor) {
-        if (actor.statuses.has(statusToCheck) {
+        if (actor.statuses.has(statusToCheck)) {
             await actor.toggleStatusEffect(statusToCheck, { active: false })
         }
     }

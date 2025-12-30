@@ -8,10 +8,10 @@
       "flags": {}
     }
   ],
-  "version": "4.2.2",
+  "version": "4.3.0",
   "compatibility": {
     "minimum": "12.238",
-    "verified": "12.331"
+    "verified": "13.351"
   },
   "url": "https://github.com/draconas1/foundry-4e-tools",
   "manifest": "https://github.com/draconas1/foundry-4e-tools/releases/latest/download/module.json",
@@ -38,7 +38,7 @@
         "manifest": "https://raw.githubusercontent.com/EndlesNights/dnd4eBeta/main/system.json",
         "compatibility": {
           "minimum": "0.5.1",
-          "verified": "0.5.1"
+          "verified": "0.6.11"
         }
       }
     ]
