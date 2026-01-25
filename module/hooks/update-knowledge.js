@@ -3,8 +3,10 @@ export function addActorContextMenuUpdateMonsterKnowledge(html, entryOptions) {
     entryOptions.push({
         name: game.i18n.localize("TOOLS4E.context.update-monster-knowledge"),
         condition: target => {
-            console.log(target)
-            const id = target.attributes["data-entry-id"].value
+            if (!game.user?.isGM) {
+                return false
+            }
+            const id = target.attributes["data-entry-id"]?.value
             const actor = game.actors.get(id);
             return actor?.type === 'NPC' && actor?.flags?.masterplan?.imported
         },
