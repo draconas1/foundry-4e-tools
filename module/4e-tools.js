@@ -3,7 +3,6 @@ import {addImportMonsterButton} from "./hooks/import-button.js";
 import {addActorContextMenuUpdateMonsterKnowledge} from "./hooks/update-knowledge.js";
 import {setDeadIcon} from "./hooks/set-dead-icon.js";
 import {registerConfigs} from "./config.js";
-import {registerSpeedProvider} from "./integrations/drag-ruler-4E-speed-provider.js";
 import {registerAutoCompletePackage} from "./integrations/autocomplete-inline-properties.js";
 
 Hooks.once('devModeReady', ({ registerPackageDebugFlag }) => {
@@ -14,23 +13,6 @@ Hooks.once('init', () => {
     DnD4eTools.initialize();
     registerConfigs();
 });
-
-Hooks.on('renderSidebarTab', addImportMonsterButton);
-Hooks.on('updateActor', setBloodiedDeadOnHPChange);
-Hooks.once("setup", setDeadIcon);
-// drag ruler integration
-Hooks.once("dragRuler.ready", registerSpeedProvider);
-//auto complete inline properties integration
-Hooks.on("aipSetup", registerAutoCompletePackage);
-Hooks.on("getActorDirectoryEntryContext", addActorContextMenuUpdateMonsterKnowledge);
-
-Hooks.once('tokenActionHudCoreApiReady', async () => {
-    const module = game.modules.get('token-action-hud-dnd4e')
-    if (!module?.active) {
-        ui.notifications.error("TOKEN ACTION HUD: 4e Integration has moved to https://github.com/draconas1/token-action-hud-dnd4e (logged to console for C&P)");
-        console.log("TOKEN ACTION HUD: 4e Integration has moved to https://github.com/draconas1/token-action-hud-dnd4e")
-    }
-})
 
 export default class DnD4eTools {
     static ID = 'foundry-4e-tools';
@@ -95,8 +77,20 @@ export default class DnD4eTools {
 
     static initialize() {
         console.log(this.NAME + " | Initialising 4E Tools and Masterplan Importer")
+
+        Hooks.on('renderActorDirectory', addImportMonsterButton);
+        Hooks.on('updateActor', setBloodiedDeadOnHPChange);
+        Hooks.once("setup", setDeadIcon);
+//auto complete inline properties integration
+        Hooks.on("aipSetup", registerAutoCompletePackage);
+        Hooks.on("getActorContextOptions", addActorContextMenuUpdateMonsterKnowledge);
+
+        Hooks.once('tokenActionHudCoreApiReady', async () => {
+            const module = game.modules.get('token-action-hud-dnd4e')
+            if (!module?.active) {
+                ui.notifications.error("TOKEN ACTION HUD: 4e Integration has moved to https://github.com/draconas1/token-action-hud-dnd4e (logged to console for C&P)");
+                console.log("TOKEN ACTION HUD: 4e Integration has moved to https://github.com/draconas1/token-action-hud-dnd4e")
+            }
+        })
     }
 }
-
-
-

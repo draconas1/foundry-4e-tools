@@ -8,9 +8,9 @@
       "flags": {}
     }
   ],
-  "version": "4.3.0",
+  "version": "5.0.0",
   "compatibility": {
-    "minimum": "12.238",
+    "minimum": "13",
     "verified": "13.351"
   },
   "url": "https://github.com/draconas1/foundry-4e-tools",
@@ -37,8 +37,8 @@
         "type": "system",
         "manifest": "https://raw.githubusercontent.com/EndlesNights/dnd4eBeta/main/system.json",
         "compatibility": {
-          "minimum": "0.5.1",
-          "verified": "0.6.11"
+          "minimum": "0.7.4",
+          "verified": "0.7.4.2"
         }
       }
     ]

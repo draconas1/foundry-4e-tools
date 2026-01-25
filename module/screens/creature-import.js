@@ -1,30 +1,71 @@
 import DnD4eTools from "../4e-tools.js";
+const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
 
-export default class CreatureImporterScreen extends FormApplication {
-    static get defaultOptions() {
-        const defaults = super.defaultOptions;
-        const title = game.i18n.localize("TOOLS4E.import-json-screen.title")
-        const overrides = {
-            height: 'auto',
-            id: 'creature-import',
-            template: DnD4eTools.TEMPLATES.IMPORTER_INPUT,
-            title: title
-        };
-
-        const mergedOptions = foundry.utils.mergeObject(defaults, overrides);
-        return mergedOptions;
+export default class CreatureImporterScreen extends HandlebarsApplicationMixin(ApplicationV2) {
+    static DEFAULT_OPTIONS = {
+        id: 'creature-import',
+        tag: "form", // The default is "div"
+        form: {
+            handler: CreatureImporterScreen.#onSubmit,
+            submitOnChange: false,
+            closeOnSubmit: true,
+        },
+        window: {
+            icon: "fas fa-gear", // You can now add an icon to the header
+            title: "TOOLS4E.import-json-screen.title",
+            contentClasses: ["standard-form"]
+        },
+        position: {
+            height: "auto",
+        },
+        actions: {
+           importInFoldersChange: this.#importInFoldersChange
+        }
     }
 
-    getData(options) {
+    get title() {
+        return `${game.i18n.localize(this.options.window.title)}`;
+    }
+
+    static PARTS = {
+        form: {
+            template: "modules/foundry-4e-tools/templates/importer-input.hbs"
+        },
+        footer: {
+            template: "templates/generic/form-footer.hbs",
+        }
+    }
+
+    _prepareContext(options) {
         const data = {}
         data[DnD4eTools.SETTINGS.CREATE_IN_ENCOUNTER_FOLDERS] = game.settings.get(DnD4eTools.ID, DnD4eTools.SETTINGS.CREATE_IN_ENCOUNTER_FOLDERS)
         data[DnD4eTools.SETTINGS.DO_NOT_DUPLICATE] = game.settings.get(DnD4eTools.ID, DnD4eTools.SETTINGS.DO_NOT_DUPLICATE)
         data[DnD4eTools.SETTINGS.DO_NOT_DUPLICATE_IN_FOLDER] = game.settings.get(DnD4eTools.ID, DnD4eTools.SETTINGS.DO_NOT_DUPLICATE_IN_FOLDER)
+        data["no-duplicate-checking"] = !(data[DnD4eTools.SETTINGS.DO_NOT_DUPLICATE] || data[DnD4eTools.SETTINGS.DO_NOT_DUPLICATE_IN_FOLDER])
         DnD4eTools.log(false, "Default Input Form Config: " + JSON.stringify(data))
+
+        data.buttons = [
+            { type: "submit", icon: "fa-solid fa-save", label: "TOOLS4E.import-json-screen.import-button" }
+        ]
+
         return data;
     }
 
-    async _updateObject(event, formData) {
+    static async #importInFoldersChange(event, target) {
+        console.log("badger")
+        this.element.querySelector('#do-not-import-duplicates-in-folder').disabled=!event.target.checked
+    }
+
+    /**
+     * Process form submission for the sheet
+     * @this {CreatureImporterScreen}                      The handler is called with the application as its bound scope
+     * @param {SubmitEvent} event                   The originating form submission event
+     * @param {HTMLFormElement} form                The form element that was submitted
+     * @param {FormDataExtended} formDataExt           Processed data for the submitted form
+     * @returns {Promise<void>}
+     */
+    static async #onSubmit(event, form, formDataExt) {
+        const formData = foundry.utils.expandObject(formDataExt.object);
         let obj = "";
         try {
             obj = JSON.parse(('Pasted content: ', formData.masterPlanInput))
@@ -112,7 +153,6 @@ export default class CreatureImporterScreen extends FormApplication {
                         const actorData =  {
                             "name" : creature.Name,
                             "type" : "NPC",
-                            "system" : creature.Data,
                             "folder" : folderId,
                             "prototypeToken" : creature.Token,
                             "flags" : flags
@@ -122,6 +162,7 @@ export default class CreatureImporterScreen extends FormApplication {
                         }
 
                         let actor = await Actor.create(actorData)
+                        await actor.update({ "system": creature.Data, "flags.masterplan": flags })
                         await actor.createEmbeddedDocuments("Item", creature.Powers)
                         await actor.createEmbeddedDocuments("Item", creature.Traits)
                         return actor
