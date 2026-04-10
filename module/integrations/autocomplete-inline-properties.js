@@ -14,7 +14,7 @@ export function registerAutoCompletePackage(packageConfig) {
                 name: "ActiveEffectConfig",
                 fieldConfigs: [
                     {
-                        selector: `.tab[data-tab="effects"] .key input[type="text"]`,
+                        selector: `.tab[data-tab="changes"] .key input[type="text"]`,
                         defaultPath: "system",
                         showButton: true,
                         allowHotkey: true,
