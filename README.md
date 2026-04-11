@@ -1,12 +1,12 @@
-![](https://img.shields.io/badge/Foundry-v12-informational)
+![](https://img.shields.io/badge/Foundry-v13-informational)
 # D&D 4E Tools for Foundry VTT
 A collection of tools and utilities for improving QoL running 4E in foundry VTT, distributed as a free module.
 
 This requires the D&D 4E setting: https://github.com/EndlesNights/dnd4eBeta
 
 * **Author**: Draconas#9000
-* **Foundry VTT Compatibility**: 12.0+
-* **DnD4E system compatibility**: 0.5.1+
+* **Foundry VTT Compatibility**: 13.0+
+* **DnD4E system compatibility**: 0.7.4+
 
 **Token Action Hud Core integration for 4E has moved!** Go here: https://github.com/draconas1/token-action-hud-dnd4e
 
@@ -42,13 +42,14 @@ The folder import and duplicate checking have configuration options that let you
 * NPC's will automatically gain a dead status icon and be set as defeated in the combat tracker when reduced to 0 HP.
 * PC's will automatically gain a dying status icon when reduced to 0 HP
 * PC's will automatically gain a dead status icon and be set as defeated in the combat tracker when reduced to -bloodied HP.
+* PC's & NPC's reduced to 0 hitpoints will automatically use any powers whose trigger text is exactly 'the creature is reduced to 0 hits', are prepared, and have at least 1 use remaining.  (Must have a use remaining, even if its an at-will power)
 
 Gaining HP will set them back to the relevant status and undefeat them in combat tracker.
 
 #### Configuration
-There are configuration values for automatically setting bloodied and automatically setting the various dead states.
+There are configuration values for automatically setting bloodied and automatically setting the various dead states and auto power execution.
 
-### Replace Dead Status Icon
+### Replace Dead/Dying Status Icon
 I found the dead status icon hard to see in some tokens.  There is now a configuration option that replaces it with a big red skull and crossbones.
 
 ### Update Monster Knowledge Features
@@ -83,7 +84,6 @@ Makes the selected tokens give off light and toggles the "torch" status effect t
 ## Addins
 Compatibility for 4E for the following modules:
 * Auto Complete Inline Properties: https://github.com/ghost-fvtt/FVTT-Autocomplete-Inline-Properties 
-* Drag Ruler: https://github.com/manuelVo/foundryvtt-drag-ruler
 
 # Thanks
 Dan Houston and Dave Barnett both kindly created the SVG art of the 4E power icons for me when I posted a request out to my friends :)

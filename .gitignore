@@ -1,3 +1,7 @@
+.claude/**
+.idea/**
 /packs/**/*.log
 /packs/**/*.old
-mklink commands.txt
+link-config.json
+setup-links.mjs
+foundry/**

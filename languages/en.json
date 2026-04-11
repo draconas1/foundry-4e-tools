@@ -35,6 +35,10 @@
         "Name": "Auto Bloodied",
         "Hint": "Apply the Bloodied status icon automatically when a creature is bloodied."
       },
+      "trigger-0-hits": {
+        "Name": "Auto trigger on 0 hits powers",
+        "Hint": "When a creature hits 0 HP will automatically trigger any powers with the (exact) trigger 'the creature is reduced to 0 hits' AND >0 uses remaining"
+      },
       "dead-icon": {
         "Name": "Auto Defeated",
         "Hint": "When a creature hits 0 HP it is given the dead status and marked as defeated in combat if an NPC, or dying if a PC. PC's are marked dead on -bloodied HP"

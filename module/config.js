@@ -61,4 +61,12 @@ export function registerConfigs() {
         hint: `TOOLS4E.settings.${DnD4eTools.SETTINGS.CHANGE_DEAD_ICON}.Hint`,
         onChange: () => DnD4eTools.setDeadIcon()
     });
+    game.settings.register(DnD4eTools.ID, DnD4eTools.SETTINGS.TRIGGER_0_HITS, {
+        name: `TOOLS4E.settings.${DnD4eTools.SETTINGS.TRIGGER_0_HITS}.Name`,
+        default: true,
+        type: Boolean,
+        scope: 'world',
+        config: true,
+        hint: `TOOLS4E.settings.${DnD4eTools.SETTINGS.TRIGGER_0_HITS}.Hint`
+    });
 }

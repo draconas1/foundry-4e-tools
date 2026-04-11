@@ -70,12 +70,27 @@ export async function setBloodiedDeadOnHPChange(actor, change, options, userId) 
                         await defeatInCombat(actor, false)
                     }
                 }
+                if (game.settings.get(DnD4eTools.ID, DnD4eTools.SETTINGS.TRIGGER_0_HITS)) {
+                    await triggerEffects(actor)
+                }
             }
             else {
                 await defeatInCombat(actor, false)
                 const statusIds = (findEffectIds(dying, actor)).concat(findEffectIds(dead, actor)).concat(findEffectIds(unconscious, actor))
                 await actor.deleteEmbeddedDocuments("ActiveEffect", statusIds)
             }
+        }
+    }
+
+    /**
+     * @param {foundry.documents.Actor} actor
+     */
+    async function triggerEffects(actor) {
+        const allPowers = actor.items.filter((item) => item.type === "power")
+        const triggeredPowers = allPowers.filter(x => x.system.trigger?.toLowerCase() === "the creature is reduced to 0 hits")
+        const availablePowers = triggeredPowers.filter(x => x.system.prepared && x.system.uses?.value > 0)
+        for (const power of availablePowers) {
+            await actor.usePower(power)
         }
     }
 

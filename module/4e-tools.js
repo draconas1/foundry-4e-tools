@@ -32,7 +32,8 @@ export default class DnD4eTools {
         BLOODIED_ICON: 'bloodied-icon',
         DEAD_ICON: 'dead-icon',
         CHANGE_DEAD_ICON: 'change-dead-icon',
-        LARGE_BLOODIED_ICON: 'large-bloodied-icon'
+        LARGE_BLOODIED_ICON: 'large-bloodied-icon',
+        TRIGGER_0_HITS: 'trigger-0-hits'
     }
 
     static TEMPLATES = {
