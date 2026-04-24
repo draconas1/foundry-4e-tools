@@ -82,6 +82,11 @@ function customGetter(sheet) {
         keywords.effect.push(key)
     })
 	
+	// Extra attributes unique to "weapon" fork
+    for(const attr of ["proficient", "one", "spc"]) {
+        keywords.weapon.push(attr)
+	}
+	
 	// Extra attributes unique to "power" fork
     for(const prop of ["basic", "mBasic", "rBasic", "charge", "opp"]) {
         keywords.power.push(prop)
