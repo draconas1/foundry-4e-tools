@@ -38,14 +38,23 @@ function customGetter(sheet) {
 
     const powerEffectData = {}
 
-    const effectTypes = ["feat", "item", "power", "racial", "untyped"]
+    const bonusTypes = ["feat", "item", "power", "racial", "untyped"]
     const keywords = {
         power : [],
-        weapon: []
+        weapon: [],
+		effect: []
     }
 
-    Object.keys(game.dnd4e.config.effectTypes).forEach((key) => keywords.power.push(key))
-    Object.keys(game.dnd4e.config.powerSource).forEach((key) => keywords.power.push(key))
+    Object.keys(game.dnd4e.config.effectTypes).forEach((key) => {
+		keywords.power.push(key)
+		keywords.effect.push(key)
+	})
+	
+    Object.keys(game.dnd4e.config.powerSource).forEach((key) => {
+		keywords.power.push(key)
+		keywords.effect.push(key)
+	})
+	
     if (game.dnd4e.config.toolKeys) {
         Object.keys(game.dnd4e.config.toolKeys).forEach((key) => keywords.power.push(key))
         Object.keys(game.dnd4e.config.rangeKeys).forEach((key) => keywords.power.push(key))
@@ -66,17 +75,45 @@ function customGetter(sheet) {
     Object.keys(game.dnd4e.config.damageTypes).forEach((key) => {
         keywords.power.push(key)
         keywords.weapon.push(key)
+        keywords.effect.push(key)
     })
 
+    Object.keys(game.dnd4e.config.statusEffect).forEach((key) => {
+        keywords.effect.push(key)
+    })
+	
+	// Extra attributes unique to "weapon" fork
+    for(const attr of ["proficient", "one", "spc"]) {
+        keywords.weapon.push(attr)
+	}
+	
+	// Extra attributes unique to "power" fork
+    for(const prop of ["basic", "mBasic", "rBasic", "charge", "opp"]) {
+        keywords.power.push(prop)
+	}
+    for(const stat of ["Str", "Dex", "Con", "Int", "Wis", "Cha"]) {
+        keywords.power.push(`uses${stat}`)
+	}
+    for(const def of ["AC", "Fort", "Ref", "Wil"]) {
+        keywords.power.push(`vs${def}`)
+	}
+
     for(const powWep of ["power", "weapon"]) {
-        for (const attackDamage of ["attack", "damage"]) {
+        for (const attackDamage of ["attack", "damage", "defence"]) {
             for(const keyword of keywords[powWep]) {
-                for (const effectType of effectTypes) {
-                    createNestedObject(powerEffectData, [powWep,attackDamage,keyword,effectType], 0)
+                for (const bonusType of bonusTypes) {
+                    createNestedObject(powerEffectData, [powWep,attackDamage,keyword,bonusType], 0)
                 }
             }
         }
     }
+	for (const saveType of ["save", "saveDC"]) {
+		for(const keyword of keywords.effect) {
+			for (const bonusType of bonusTypes) {
+				createNestedObject(powerEffectData, ["effect",saveType,keyword,bonusType], 0)
+			}
+		}
+	}
 
     return {
         ...baseData,
