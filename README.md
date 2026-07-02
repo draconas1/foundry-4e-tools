@@ -1,12 +1,12 @@
-![](https://img.shields.io/badge/Foundry-v13-informational)
+![](https://img.shields.io/badge/Foundry-v14-informational)
 # D&D 4E Tools for Foundry VTT
 A collection of tools and utilities for improving QoL running 4E in foundry VTT, distributed as a free module.
 
 This requires the D&D 4E setting: https://github.com/EndlesNights/dnd4eBeta
 
 * **Author**: Draconas#9000
-* **Foundry VTT Compatibility**: 13.0+
-* **DnD4E system compatibility**: 0.7.4+
+* **Foundry VTT Compatibility**: 14.0+
+* **DnD4E system compatibility**: 0.8.7+
 
 **Token Action Hud Core integration for 4E has moved!** Go here: https://github.com/draconas1/token-action-hud-dnd4e
 
