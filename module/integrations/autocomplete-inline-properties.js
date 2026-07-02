@@ -45,45 +45,45 @@ function customGetter(sheet) {
 		effect: []
     }
 
-    Object.keys(game.dnd4e.config.effectTypes).forEach((key) => {
+    Object.keys(dnd4e.CONFIG.effectTypes).forEach((key) => {
 		keywords.power.push(key)
 		keywords.effect.push(key)
 	})
 	
-    Object.keys(game.dnd4e.config.powerSource).forEach((key) => {
+    Object.keys(dnd4e.CONFIG.powerSource).forEach((key) => {
 		keywords.power.push(key)
 		keywords.effect.push(key)
 	})
 	
-    if (game.dnd4e.config.toolKeys) {
-        Object.keys(game.dnd4e.config.toolKeys).forEach((key) => keywords.power.push(key))
-        Object.keys(game.dnd4e.config.rangeKeys).forEach((key) => keywords.power.push(key))
+    if (dnd4e.CONFIG.toolKeys) {
+        Object.keys(dnd4e.CONFIG.toolKeys).forEach((key) => keywords.power.push(key))
+        Object.keys(dnd4e.CONFIG.rangeKeys).forEach((key) => keywords.power.push(key))
     }
 
-    Object.keys(game.dnd4e.config.weaponGroup).forEach((key) => keywords.weapon.push(key))
-    Object.keys(game.dnd4e.config.weaponProperties).forEach((key) => keywords.weapon.push(key))
+    Object.keys(dnd4e.CONFIG.weaponGroup).forEach((key) => keywords.weapon.push(key))
+    Object.keys(dnd4e.CONFIG.weaponProperties).forEach((key) => keywords.weapon.push(key))
 
     // old
-    if (game.dnd4e.config.implementGroup) {
-        Object.keys(game.dnd4e.config.implementGroup).forEach((key) => keywords.weapon.push(key))
+    if (dnd4e.CONFIG.implementGroup) {
+        Object.keys(dnd4e.CONFIG.implementGroup).forEach((key) => keywords.weapon.push(key))
     }
     // new
-    if (game.dnd4e.config.implement) {
-        Object.keys(game.dnd4e.config.implement).forEach((key) => keywords.weapon.push(key))
+    if (dnd4e.CONFIG.implement) {
+        Object.keys(dnd4e.CONFIG.implement).forEach((key) => keywords.weapon.push(key))
     }
 
-    Object.keys(game.dnd4e.config.damageTypes).forEach((key) => {
+    Object.keys(dnd4e.CONFIG.damageTypes).forEach((key) => {
         keywords.power.push(key)
         keywords.weapon.push(key)
         keywords.effect.push(key)
     })
 
-    Object.keys(game.dnd4e.config.statusEffect).forEach((key) => {
+    Object.keys(dnd4e.CONFIG.statusEffect).forEach((key) => {
         keywords.effect.push(key)
     })
 	
 	// Extra attributes unique to "weapon" fork
-    for(const attr of ["proficient", "one", "spc"]) {
+    for(const attr of ["proficient", "one", "spc","self"]) {
         keywords.weapon.push(attr)
 	}
 	
